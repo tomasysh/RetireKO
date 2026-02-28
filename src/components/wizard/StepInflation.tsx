@@ -23,7 +23,7 @@ export default function StepInflation({ onNext }: StepProps) {
   const [annualReturn, setAnnualReturn] = useState(state.annualReturn);
   const [currentSavings, setCurrentSavings] = useState(state.currentSavings);
   const [savingsInput, setSavingsInput] = useState(
-    state.currentSavings > 0 ? String(state.currentSavings) : ''
+    state.currentSavings > 0 ? state.currentSavings.toLocaleString('zh-TW') : ''
   );
 
   useEffect(() => {
@@ -131,16 +131,18 @@ export default function StepInflation({ onNext }: StepProps) {
         </label>
         <p className="text-xs text-gray-500 mb-2 leading-relaxed">{t('stepInflation.currentSavingsHint')}</p>
         <div className="relative">
-          <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm">NT$</span>
+          <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm select-none">NT$</span>
           <input
-            type="number"
-            min="0"
-            step="10000"
+            type="text"
+            inputMode="numeric"
             value={savingsInput}
             onChange={(e) => {
-              setSavingsInput(e.target.value);
-              const val = parseFloat(e.target.value);
-              setCurrentSavings(isNaN(val) || val < 0 ? 0 : val);
+              // Strip everything except digits
+              const raw = e.target.value.replace(/[^\d]/g, '');
+              const num = raw === '' ? 0 : parseInt(raw, 10);
+              // Format with commas for display
+              setSavingsInput(raw === '' ? '' : num.toLocaleString('zh-TW'));
+              setCurrentSavings(num);
             }}
             placeholder="0"
             className="w-full pl-12 pr-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
