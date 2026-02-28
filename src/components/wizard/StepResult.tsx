@@ -145,24 +145,13 @@ export default function StepResult() {
         {/* Assumptions */}
         <div className="bg-gray-50 border border-gray-200 rounded-xl px-4 py-4 mb-4">
           <h3 className="text-sm font-semibold text-gray-700 mb-3">{t('stepResult.assumptions')}</h3>
-          <ul className="text-sm text-gray-600 space-y-2">
-            <li className="flex justify-between">
-              <span>{t('stepResult.assumptionInflation', { rate: '' }).replace('{rate}%', '').trim()}</span>
-              <span className="font-semibold tabular-nums">{state.inflationRate}%</span>
-            </li>
-            <li className="flex justify-between">
-              <span>{t('stepResult.assumptionReturn', { rate: '' }).replace('{rate}%', '').trim()}</span>
-              <span className="font-semibold tabular-nums">{state.annualReturn}%</span>
-            </li>
+          <ul className="text-sm text-gray-600 space-y-1.5">
+            <li>{t('stepResult.assumptionInflation', { rate: state.inflationRate })}</li>
+            <li>{t('stepResult.assumptionReturn', { rate: state.annualReturn })}</li>
             {state.retirementYears && (
-              <li className="flex justify-between">
-                <span>{t('stepResult.assumptionRetirementYears', { years: '' }).replace('{years}', '').trim()}</span>
-                <span className="font-semibold tabular-nums">{state.retirementYears} yrs</span>
-              </li>
+              <li>{t('stepResult.assumptionRetirementYears', { years: state.retirementYears })}</li>
             )}
-            <li className="pt-1 border-t border-gray-200 text-xs text-gray-500">
-              {t('stepResult.assumptionRule')}
-            </li>
+            <li className="pt-1 border-t border-gray-200 text-xs text-gray-500">{t('stepResult.assumptionRule')}</li>
           </ul>
         </div>
 

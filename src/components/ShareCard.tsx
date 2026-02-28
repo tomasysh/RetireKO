@@ -3,11 +3,8 @@ import html2canvas from 'html2canvas';
 import { useRetirement } from '../context/RetirementContext';
 import { useI18n } from '../context/I18nContext';
 
-function formatWan(amount: number): string {
-  const wan = amount / 10000;
-  return wan >= 100
-    ? `${(wan / 10000).toFixed(0)} 億`
-    : `${Math.round(wan).toLocaleString('zh-TW')} 萬`;
+function formatPlain(amount: number): string {
+  return Math.round(amount).toLocaleString('zh-TW');
 }
 
 export default function ShareCard() {
@@ -20,7 +17,7 @@ export default function ShareCard() {
   if (!state.retirementTarget || !state.yearsToRetire) return null;
 
   const isZh = locale === 'zh-TW';
-  const targetLabel = formatWan(state.retirementTarget);
+  const targetLabel = formatPlain(state.retirementTarget);
 
   const generate = async () => {
     if (!cardRef.current) return;

@@ -1,4 +1,5 @@
-import { Document, Page, Text, View, StyleSheet, PDFDownloadLink, Font } from '@react-pdf/renderer';
+import { useState } from 'react';
+import { Document, Page, Text, View, StyleSheet, Font, pdf } from '@react-pdf/renderer';
 import notoLatinUrl from '@fontsource/noto-sans-tc/files/noto-sans-tc-latin-400-normal.woff?url';
 import notoLatinBoldUrl from '@fontsource/noto-sans-tc/files/noto-sans-tc-latin-700-normal.woff?url';
 import notoCJKUrl from '@fontsource/noto-sans-tc/files/noto-sans-tc-chinese-traditional-400-normal.woff?url';
@@ -208,54 +209,61 @@ function RetirementPDFDocument(props: PDFDocumentProps) {
 export default function RetirementPDFDownload() {
   const { t, locale } = useI18n();
   const { state } = useRetirement();
+  const [loading, setLoading] = useState(false);
 
   if (!state.retirementTarget || !state.futureAnnualExpense || !state.yearsToRetire || !state.monthlySaving || !state.currentAge || !state.retireAge || !state.monthlyExpense) {
     return null;
   }
 
-  return (
-    <PDFDownloadLink
-      document={
+  const handleDownload = async () => {
+    setLoading(true);
+    try {
+      const blob = await pdf(
         <RetirementPDFDocument
-          targetAmount={formatCurrency(state.retirementTarget)}
+          targetAmount={formatCurrency(state.retirementTarget!)}
           minimumTarget={state.minimumTarget != null ? formatCurrency(state.minimumTarget) : null}
-          yearsToRetire={state.yearsToRetire}
+          yearsToRetire={state.yearsToRetire!}
           retirementYears={state.retirementYears}
           lifeExpectancy={state.lifeExpectancy}
-          futureAnnualExpense={formatCurrency(state.futureAnnualExpense)}
-          monthlySaving={formatCurrency(state.monthlySaving)}
+          futureAnnualExpense={formatCurrency(state.futureAnnualExpense!)}
+          monthlySaving={formatCurrency(state.monthlySaving!)}
           inflationRate={state.inflationRate}
           annualReturn={state.annualReturn}
-          currentAge={state.currentAge}
-          retireAge={state.retireAge}
-          monthlyExpense={formatCurrency(state.monthlyExpense)}
+          currentAge={state.currentAge!}
+          retireAge={state.retireAge!}
+          monthlyExpense={formatCurrency(state.monthlyExpense!)}
           locale={locale}
         />
-      }
-      fileName="RetireKO-退休計畫.pdf"
-      className="flex-1"
+      ).toBlob();
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'RetireKO-退休計畫.pdf';
+      a.click();
+      URL.revokeObjectURL(url);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <button
+      onClick={handleDownload}
+      disabled={loading}
+      className="flex-1 px-6 py-3 rounded-lg text-white bg-emerald-500 hover:bg-emerald-600 disabled:bg-emerald-400 disabled:cursor-wait transition-colors cursor-pointer font-medium flex items-center justify-center gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
     >
-      {({ loading }) =>
-        loading ? (
-          <span className="flex items-center justify-center gap-2 w-full px-6 py-3 rounded-lg text-white bg-emerald-400 cursor-wait font-medium select-none">
-            <svg
-              className="animate-spin h-4 w-4 text-white flex-shrink-0"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-            >
-              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
-            </svg>
-            <span className="animate-pulse">{locale === 'zh-TW' ? '產生 PDF 中…' : 'Generating PDF…'}</span>
-          </span>
-        ) : (
-          <span className="flex items-center justify-center gap-2 w-full px-6 py-3 rounded-lg text-white bg-emerald-500 hover:bg-emerald-600 transition-colors cursor-pointer font-medium">
-            📄 {t('app.downloadPdf')}
-          </span>
-        )
-      }
-    </PDFDownloadLink>
+      {loading ? (
+        <>
+          <svg className="animate-spin h-4 w-4 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" aria-hidden="true">
+            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+          </svg>
+          <span className="animate-pulse">{locale === 'zh-TW' ? '產生 PDF 中…' : 'Generating PDF…'}</span>
+        </>
+      ) : (
+        <>📄 {t('app.downloadPdf')}</>
+      )}
+    </button>
   );
 }
 
