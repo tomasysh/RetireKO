@@ -4,6 +4,7 @@ import {
   type Gender,
   calculateFutureExpense,
   calculateRetirementTarget,
+  calculateMinimumTarget,
   calculateMonthlySaving,
 } from '../utils/calculations';
 export type { Gender } from '../utils/calculations';
@@ -21,7 +22,8 @@ export interface RetirementState {
   yearsToRetire: number | null;
   annualExpense: number | null;
   futureAnnualExpense: number | null;
-  retirementTarget: number | null;
+  retirementTarget: number | null;    // 4% rule = 25×
+  minimumTarget: number | null;       // Finite annuity spend-down
   monthlySaving: number | null;
 }
 
@@ -47,6 +49,7 @@ const initialState: RetirementState = {
   annualExpense: null,
   futureAnnualExpense: null,
   retirementTarget: null,
+  minimumTarget: null,
   monthlySaving: null,
 };
 
@@ -76,11 +79,14 @@ function reducer(state: RetirementState, action: Action): RetirementState {
     case 'SET_RETURN':
       return { ...state, annualReturn: action.annualReturn };
     case 'CALCULATE': {
-      if (state.annualExpense == null || state.yearsToRetire == null || state.retirementYears == null) return state;
+      if (state.annualExpense == null || state.yearsToRetire == null) return state;
       const futureAnnualExpense = calculateFutureExpense(state.annualExpense, state.inflationRate, state.yearsToRetire);
-      const retirementTarget = calculateRetirementTarget(futureAnnualExpense, state.retirementYears, state.annualReturn, state.inflationRate);
+      const retirementTarget = calculateRetirementTarget(futureAnnualExpense);
+      const minimumTarget = state.retirementYears != null
+        ? calculateMinimumTarget(futureAnnualExpense, state.retirementYears, state.annualReturn, state.inflationRate)
+        : null;
       const monthlySaving = calculateMonthlySaving(retirementTarget, state.yearsToRetire, state.annualReturn / 100);
-      return { ...state, futureAnnualExpense, retirementTarget, monthlySaving };
+      return { ...state, futureAnnualExpense, retirementTarget, minimumTarget, monthlySaving };
     }
     case 'RESET':
       return initialState;

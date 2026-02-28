@@ -100,9 +100,10 @@ const styles = StyleSheet.create({
 
 interface PDFDocumentProps {
   targetAmount: string;
+  minimumTarget: string | null;
   yearsToRetire: number;
-  retirementYears: number;
-  lifeExpectancy: number;
+  retirementYears: number | null;
+  lifeExpectancy: number | null;
   futureAnnualExpense: string;
   monthlySaving: string;
   annualReturn: number;
@@ -155,16 +156,22 @@ function RetirementPDFDocument(props: PDFDocumentProps) {
           <BT style={styles.sectionTitle}>{isZh ? '計算結果' : 'Results'}</BT>
           <View style={styles.row}>
             <BT style={styles.label}>{isZh ? '退休後支撐年限' : 'Retirement Duration'}</BT>
-            <BT style={styles.value}>{`${props.retirementYears} ${isZh ? '年（平均壽命 ' + props.lifeExpectancy + ' 歲）' : 'yrs (life exp. ' + props.lifeExpectancy + ')'}`}</BT>
+            <BT style={styles.value}>{props.retirementYears ? `${props.retirementYears} ${isZh ? '年（平均壽命 ' + props.lifeExpectancy + ' 歲）' : 'yrs (life exp. ' + props.lifeExpectancy + ')'}` : '-'}</BT>
           </View>
           <View style={styles.row}>
             <BT style={styles.label}>{isZh ? '退休時預估年開銷' : 'Future Annual Expense'}</BT>
             <Text style={styles.value}>NT$ {props.futureAnnualExpense}</Text>
           </View>
           <View style={styles.row}>
-            <BT style={styles.label}>{isZh ? '退休目標金額' : 'Retirement Target'}</BT>
+            <BT style={styles.label}>{isZh ? '退休目標（4% 法則，年生活費 × 25）' : 'Target (4% Rule, expense × 25)'}</BT>
             <Text style={styles.value}>NT$ {props.targetAmount}</Text>
           </View>
+          {props.minimumTarget && (
+            <View style={styles.row}>
+              <BT style={styles.label}>{isZh ? '最低需求（平均壽命精算，花到歸零）' : 'Minimum (life expectancy spend-down)'}</BT>
+              <Text style={styles.value}>NT$ {props.minimumTarget}</Text>
+            </View>
+          )}
           <View style={styles.row}>
             <BT style={styles.label}>
               {isZh ? `建議每月儲蓄 (${props.annualReturn}% 年化)` : `Monthly Savings (${props.annualReturn}% return)`}
@@ -183,8 +190,8 @@ function RetirementPDFDocument(props: PDFDocumentProps) {
           </BT>
           <BT style={styles.ruleText}>
             {isZh
-              ? `根據平均壽命推算退休金需支撐 ${props.retirementYears} 年。採用有限年期年金公式計算所需本金（非傳統 25 倍法則）。每年提取 4% 或以下，可在此期限內安全用盡資產。`
-              : `Based on life expectancy, your fund must last ${props.retirementYears} years. We use a finite annuity formula (not the traditional 25× rule) to calculate the required corpus. Withdrawing ≤4% per year ensures funds last exactly this period.`}
+              ? `4% 法則（Trinity Study, 1998）：每年從退休金中提取不超過 4%（即準備 25 倍年生活費），歷史上 95% 以上的情境下資金可維持 30 年以上，甚至持續增長。${props.retirementYears ? `根據你的平均壽命，退休金需支撐約 ${props.retirementYears} 年，4% 法則目標可安全覆蓋。` : ''}`
+              : `The 4% Rule (Trinity Study, 1998): withdrawing ≤4% per year (saving 25× annual expenses) has a 95%+ historical success rate over 30+ years, with assets potentially continuing to grow.${props.retirementYears ? ` Your retirement fund needs to last ~${props.retirementYears} years; the 4% Rule target safely covers this.` : ''}`}
           </BT>
         </View>
 
@@ -202,7 +209,7 @@ export default function RetirementPDFDownload() {
   const { t, locale } = useI18n();
   const { state } = useRetirement();
 
-  if (!state.retirementTarget || !state.futureAnnualExpense || !state.yearsToRetire || !state.monthlySaving || !state.currentAge || !state.retireAge || !state.monthlyExpense || !state.retirementYears || !state.lifeExpectancy) {
+  if (!state.retirementTarget || !state.futureAnnualExpense || !state.yearsToRetire || !state.monthlySaving || !state.currentAge || !state.retireAge || !state.monthlyExpense) {
     return null;
   }
 
@@ -211,6 +218,7 @@ export default function RetirementPDFDownload() {
       document={
         <RetirementPDFDocument
           targetAmount={formatCurrency(state.retirementTarget)}
+          minimumTarget={state.minimumTarget != null ? formatCurrency(state.minimumTarget) : null}
           yearsToRetire={state.yearsToRetire}
           retirementYears={state.retirementYears}
           lifeExpectancy={state.lifeExpectancy}

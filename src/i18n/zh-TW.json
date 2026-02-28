@@ -82,10 +82,13 @@
     "monthlySaving": "建議每月儲蓄",
     "monthlySavingNote": "（以年化報酬率 {rate}% 估算）",
     "assumptions": "計算假設",
-    "lifeExpectancyNote": "根據台灣平均壽命 {le} 歲，你預計退休後需要一筆能撐 {years} 年（{retireAge} 歲 → {le} 歲）的退休金。這比「永遠不花完」的傳統 25 倍法則更真實。",
-    "assumptionRetirementYears": "退休金支撐年限：{years} 年（基於平均餘命）",
+    "lifeExpectancyNote": "根據台灣平均壽命 {le} 歲，你的退休金預計需支撐 {years} 年（{retireAge} 歲 → {le} 歲）。4% 法則目標能安全覆蓋此期間，且資產仍可持續增長。",
+    "assumptionRetirementYears": "退休後需支撐年數：{years} 年（基於平均餘命）",
     "assumptionReturn": "投資年化報酬率：{rate}%",
-    "assumptionRule": "採用 4% 法則（Trinity Study，1998）",
+    "assumptionRule": "採用 4% 法則（年生活費 × 25）",
+    "minimumTargetLabel": "最低需求目標（以平均壽命精算）",
+    "minimumTargetNote": "若資產恰好在 {years} 年後用完，最低需準備：",
+    "minimumTargetCompare": "比 4% 法則目標少約 {diff}",
     "disclaimer": "以上計算僅供參考，不構成任何投資建議。實際退休規劃應諮詢專業財務顧問。"
   },
   "scenario": {

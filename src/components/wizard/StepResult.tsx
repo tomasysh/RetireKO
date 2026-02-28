@@ -21,6 +21,10 @@ export default function StepResult() {
     return <p className="text-center text-gray-500">No data available. Please complete all steps.</p>;
   }
 
+  const diff = state.minimumTarget
+    ? state.retirementTarget - state.minimumTarget
+    : null;
+
   return (
     <div>
       <StepHeader emoji="🎯" step={5} title={t('stepResult.title')} />
@@ -60,7 +64,7 @@ export default function StepResult() {
 
       {/* Life expectancy callout */}
       {state.retirementYears && state.lifeExpectancy && state.retireAge && (
-        <div className="bg-sky-50 border border-sky-200 rounded-xl px-4 py-3 mb-5 flex items-start gap-3">
+        <div className="bg-sky-50 border border-sky-200 rounded-xl px-4 py-3 mb-4 flex items-start gap-3">
           <span className="text-2xl flex-shrink-0">🕯️</span>
           <p className="text-sm text-sky-700 leading-relaxed">
             {t('stepResult.lifeExpectancyNote', {
@@ -68,6 +72,24 @@ export default function StepResult() {
               retireAge: state.retireAge,
               years: state.retirementYears,
             })}
+          </p>
+        </div>
+      )}
+
+      {/* Minimum target comparison card */}
+      {state.minimumTarget != null && state.retirementYears && diff != null && (
+        <div className="bg-amber-50 border border-amber-200 rounded-xl px-4 py-4 mb-5">
+          <p className="text-xs font-semibold text-amber-700 uppercase tracking-wide mb-1">
+            📊 {t('stepResult.minimumTargetLabel')}
+          </p>
+          <p className="text-xs text-amber-600 mb-2">
+            {t('stepResult.minimumTargetNote', { years: state.retirementYears })}
+          </p>
+          <p className="text-xl font-bold text-amber-800 mb-1">
+            NT$ {formatCurrency(state.minimumTarget)}
+          </p>
+          <p className="text-xs text-amber-500">
+            {t('stepResult.minimumTargetCompare', { diff: formatCurrency(diff) })}
           </p>
         </div>
       )}

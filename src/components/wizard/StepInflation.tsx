@@ -33,8 +33,8 @@ export default function StepInflation({ onNext }: StepProps) {
       ? calculateFutureExpense(state.annualExpense, inflationRate, state.yearsToRetire)
       : null;
 
-  const retirementTarget = futureAnnualExpense && state.retirementYears
-    ? calculateRetirementTarget(futureAnnualExpense, state.retirementYears, annualReturn, inflationRate)
+  const retirementTarget = futureAnnualExpense
+    ? calculateRetirementTarget(futureAnnualExpense)
     : null;
 
   const handleNext = () => {

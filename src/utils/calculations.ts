@@ -18,11 +18,23 @@ export function calculateFutureExpense(
 }
 
 /**
- * Finite annuity PV formula: how much corpus do you need at retirement
- * to fund `retirementYears` years of spending, assuming a real portfolio return.
- * Uses real return = (1 + nominalReturn) / (1 + inflationRate) - 1.
+ * 4% Rule: the classic safe withdrawal rate target.
+ * Target = futureAnnualExpense × 25 (i.e. 1/4% = 25x multiplier).
+ * Assumes portfolio stays invested and grows indefinitely.
  */
 export function calculateRetirementTarget(
+  futureAnnualExpense: number
+): number {
+  return futureAnnualExpense * 25;
+}
+
+/**
+ * Minimum target via finite annuity PV formula.
+ * Calculates how much you need to fund exactly `retirementYears` years,
+ * then reaching zero — i.e. the "just enough" spend-down amount.
+ * Uses real return = (1 + nominal) / (1 + inflation) - 1.
+ */
+export function calculateMinimumTarget(
   futureAnnualExpense: number,
   retirementYears: number,
   annualReturn: number,  // percent e.g. 6

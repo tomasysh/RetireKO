@@ -29,12 +29,8 @@ export default function ScenarioSimulator() {
       state.inflationRate,
       state.yearsToRetire ?? 0
     );
-    const target = calculateRetirementTarget(
-      futureAnnualExpense,
-      state.retirementYears,
-      returnRate,
-      state.inflationRate
-    );
+    // Scenario uses 4% rule (25×) as the target baseline
+    const target = calculateRetirementTarget(futureAnnualExpense);
     const monthly = calculateMonthlySaving(target, years, returnRate / 100);
     return { monthly, years };
   }, [yearOffset, returnRate, state]);

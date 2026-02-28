@@ -82,10 +82,13 @@
     "monthlySaving": "Suggested Monthly Savings",
     "monthlySavingNote": "(Assuming {rate}% annual return)",
     "assumptions": "Calculation Assumptions",
-    "lifeExpectancyNote": "Based on Taiwan's average lifespan of {le} years, your retirement fund needs to last {years} years (age {retireAge} → {le}). This is more realistic than the traditional \"25× forever\" assumption.",
-    "assumptionRetirementYears": "Retirement fund duration: {years} years (based on life expectancy)",
+    "lifeExpectancyNote": "Based on Taiwan's average lifespan of {le} years, your fund needs to last {years} years (age {retireAge} → {le}). The 4% Rule target safely covers this period while your assets continue to grow.",
+    "assumptionRetirementYears": "Retirement duration: {years} years (based on life expectancy)",
     "assumptionReturn": "Annual investment return: {rate}%",
-    "assumptionRule": "Based on the 4% Rule (Trinity Study, 1998)",
+    "assumptionRule": "4% Rule applied (annual expense × 25)",
+    "minimumTargetLabel": "Minimum Target (Life Expectancy Spend-Down)",
+    "minimumTargetNote": "If your assets reach zero after {years} years, the minimum needed:",
+    "minimumTargetCompare": "~{diff} less than the 4% Rule target",
     "disclaimer": "The above calculations are for reference only and do not constitute investment advice. Please consult a professional financial advisor for actual retirement planning."
   },
   "scenario": {
