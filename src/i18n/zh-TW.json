@@ -11,6 +11,19 @@
     "of": "/ 共",
     "learnMore": "💡 了解更多"
   },
+  "stepGender": {
+    "title": "你的平均餘命是多少？",
+    "description": "退休金要支撐多久，取決於你的壽命。根據內政部 113 年公布的最新數據，男女性的平均餘命分別如下——我們以此推算你的退休金需要撐幾年。",
+    "source": "資料來源：內政部統計處《113 年簡易生命表》",
+    "male": "男性",
+    "female": "女性",
+    "yearsUnit": "歲（平均壽命）",
+    "maleTagline": "台灣男性平均壽命 77.42 歲，高於全球平均 6.7 歲 🌏",
+    "femaleTagline": "台灣女性平均壽命 84.30 歲，高於全球平均 8.3 歲 🌸",
+    "retirementYears": "退休後預計支撐 {n} 年",
+    "conceptTitle": "什麼是平均餘命？",
+    "conceptBody": "平均餘命是指在某年齡的人，平均還能再活多少年。我們用「平均壽命 − 預計退休年齡」算出退休金需要支撐幾年，讓目標金額更貼近真實需求，而非假設「活到永遠」的保守估算。"
+  },
   "stepAge": {
     "title": "先從時間開始",
     "currentAge": "你現在幾歲？",
@@ -50,7 +63,7 @@
     "inflationDescription": "通膨讓今天的 100 元，在 30 年後只剩約 55 元的購買力（假設年通膨 2%）。我們用這個比率把你的現在花費換算成退休那年的真實需求。",
     "annualReturn": "預估年化投資報酬率",
     "annualReturnHint": "影響「每月需存多少錢」。參考：VT（全球股票 ETF）歷史年化約 10%；台灣 0050 歷史年化約 12%（均為名目報酬率，未扣通膨）。",
-    "futureExpense": "退休時的預估年生活費：NT$ {amount}",
+    "retirementYearsNote": "📅 根據你的平均餘命，退休後需支撐約 {years} 年",
     "retirementTarget": "你的退休目標金額",
     "targetAmount": "NT$ {amount}",
     "fourPercentExplain": "年生活費 × 25 = 退休目標（4% 法則）",
@@ -68,7 +81,8 @@
     "monthlySaving": "建議每月儲蓄",
     "monthlySavingNote": "（以年化報酬率 {rate}% 估算）",
     "assumptions": "計算假設",
-    "assumptionInflation": "年通膨率：{rate}%",
+    "lifeExpectancyNote": "根據台灣平均壽命 {le} 歲，你預計退休後需要一筆能撐 {years} 年（{retireAge} 歲 → {le} 歲）的退休金。這比「永遠不花完」的傳統 25 倍法則更真實。",
+    "assumptionRetirementYears": "退休金支撐年限：{years} 年（基於平均餘命）",
     "assumptionReturn": "投資年化報酬率：{rate}%",
     "assumptionRule": "採用 4% 法則（Trinity Study，1998）",
     "disclaimer": "以上計算僅供參考，不構成任何投資建議。實際退休規劃應諮詢專業財務顧問。"

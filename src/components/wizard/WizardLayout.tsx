@@ -1,11 +1,12 @@
 import { useWizard } from '../../context/WizardContext';
 import { useI18n } from '../../context/I18nContext';
 import StepAge from './StepAge';
+import StepGender from './StepGender';
 import StepExpense from './StepExpense';
 import StepInflation from './StepInflation';
 import StepResult from './StepResult';
 
-const steps = [StepAge, StepExpense, StepInflation, StepResult];
+const steps = [StepAge, StepGender, StepExpense, StepInflation, StepResult];
 
 export default function WizardLayout() {
   const { currentStep, totalSteps, goNext, goPrev, isFirst } = useWizard();

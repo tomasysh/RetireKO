@@ -33,8 +33,8 @@ export default function StepInflation({ onNext }: StepProps) {
       ? calculateFutureExpense(state.annualExpense, inflationRate, state.yearsToRetire)
       : null;
 
-  const retirementTarget = futureAnnualExpense
-    ? calculateRetirementTarget(futureAnnualExpense)
+  const retirementTarget = futureAnnualExpense && state.retirementYears
+    ? calculateRetirementTarget(futureAnnualExpense, state.retirementYears, annualReturn, inflationRate)
     : null;
 
   const handleNext = () => {
@@ -46,7 +46,7 @@ export default function StepInflation({ onNext }: StepProps) {
 
   return (
     <div>
-      <StepHeader emoji="📈" step={3} title={t('stepInflation.title')} />
+      <StepHeader emoji="📈" step={4} title={t('stepInflation.title')} />
 
       <p className="text-gray-600 mb-5 leading-relaxed text-sm">{t('stepInflation.inflationDescription')}</p>
 
@@ -103,6 +103,12 @@ export default function StepInflation({ onNext }: StepProps) {
           <div className="bg-orange-50 border border-orange-200 rounded-lg px-4 py-3 text-orange-700 text-sm">
             {t('stepInflation.futureExpense', { amount: formatCurrency(futureAnnualExpense) })}
           </div>
+
+          {state.retirementYears && (
+            <div className="bg-blue-50 border border-blue-200 rounded-lg px-4 py-3 text-blue-700 text-sm">
+              {t('stepInflation.retirementYearsNote', { years: state.retirementYears })}
+            </div>
+          )}
 
           {retirementTarget && (
             <div className="bg-emerald-50 border border-emerald-300 rounded-xl px-6 py-5 text-center">

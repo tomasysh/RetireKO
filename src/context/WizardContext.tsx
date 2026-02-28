@@ -12,7 +12,7 @@ interface WizardContextType {
 
 const WizardContext = createContext<WizardContextType | null>(null);
 
-const TOTAL_STEPS = 4; // Age, Expense, Inflation, Result
+const TOTAL_STEPS = 5; // Age, Gender, Expense, Inflation, Result
 
 export function WizardProvider({ children }: { children: ReactNode }) {
   const [currentStep, setCurrentStep] = useState(0);

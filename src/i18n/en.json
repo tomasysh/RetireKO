@@ -11,6 +11,19 @@
     "of": "of",
     "learnMore": "💡 Learn More"
   },
+  "stepGender": {
+    "title": "Life Expectancy",
+    "description": "How long your retirement fund needs to last depends on your lifespan. Based on Taiwan's Ministry of Interior 2024 data, here are the average life expectancies — we use this to calculate how many years your retirement fund must cover.",
+    "source": "Source: Ministry of Interior Statistics, Taiwan Life Tables 2024",
+    "male": "Male",
+    "female": "Female",
+    "yearsUnit": "years (average lifespan)",
+    "maleTagline": "Taiwan male average lifespan: 77.42 years, 6.7 years above global average 🌏",
+    "femaleTagline": "Taiwan female average lifespan: 84.30 years, 8.3 years above global average 🌸",
+    "retirementYears": "Retirement fund must last ~{n} years",
+    "conceptTitle": "What is life expectancy?",
+    "conceptBody": "Life expectancy at a given age tells you how many more years a person can expect to live. By using \"average lifespan − planned retirement age\", we get a realistic retirement duration instead of assuming an infinite horizon — making your target amount more accurate."
+  },
   "stepAge": {
     "title": "Let's Start with Time",
     "currentAge": "How old are you?",
@@ -50,7 +63,7 @@
     "inflationDescription": "Inflation shrinks purchasing power over time. NT$ 100 today may only buy NT$ 55 worth of goods in 30 years (at 2% annual inflation). We use this to convert your current expenses into what you'll actually need at retirement.",
     "annualReturn": "Estimated Annual Investment Return",
     "annualReturnHint": "This affects how much you need to save monthly. Reference: VT (Global Stock ETF) ~10% historical annual return; Taiwan 0050 ~12% historical annual return (both nominal, before inflation adjustment).",
-    "futureExpense": "Estimated annual expense at retirement: NT$ {amount}",
+    "retirementYearsNote": "📅 Based on your life expectancy, your fund must last ~{years} years in retirement",
     "retirementTarget": "Your Retirement Target",
     "targetAmount": "NT$ {amount}",
     "fourPercentExplain": "Annual expense × 25 = Retirement target (4% Rule)",
@@ -68,7 +81,8 @@
     "monthlySaving": "Suggested Monthly Savings",
     "monthlySavingNote": "(Assuming {rate}% annual return)",
     "assumptions": "Calculation Assumptions",
-    "assumptionInflation": "Annual inflation rate: {rate}%",
+    "lifeExpectancyNote": "Based on Taiwan's average lifespan of {le} years, your retirement fund needs to last {years} years (age {retireAge} → {le}). This is more realistic than the traditional \"25× forever\" assumption.",
+    "assumptionRetirementYears": "Retirement fund duration: {years} years (based on life expectancy)",
     "assumptionReturn": "Annual investment return: {rate}%",
     "assumptionRule": "Based on the 4% Rule (Trinity Study, 1998)",
     "disclaimer": "The above calculations are for reference only and do not constitute investment advice. Please consult a professional financial advisor for actual retirement planning."

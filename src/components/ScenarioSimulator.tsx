@@ -22,14 +22,19 @@ export default function ScenarioSimulator() {
 
   const scenario = useMemo(() => {
     const years = (state.yearsToRetire ?? 0) + yearOffset;
-    if (years <= 0 || !state.annualExpense || !state.inflationRate) return null;
-    // Future expense is anchored to original retirement age, so years for inflation stays same
+    if (years <= 0 || !state.annualExpense || !state.retirementYears) return null;
+    // Future expense anchored to original retirement age regardless of yearOffset
     const futureAnnualExpense = calculateFutureExpense(
       state.annualExpense,
       state.inflationRate,
       state.yearsToRetire ?? 0
     );
-    const target = calculateRetirementTarget(futureAnnualExpense);
+    const target = calculateRetirementTarget(
+      futureAnnualExpense,
+      state.retirementYears,
+      returnRate,
+      state.inflationRate
+    );
     const monthly = calculateMonthlySaving(target, years, returnRate / 100);
     return { monthly, years };
   }, [yearOffset, returnRate, state]);
@@ -106,8 +111,8 @@ export default function ScenarioSimulator() {
               NT$ {formatCurrency(scenario.monthly)}
             </p>
           </div>
-          <div className="col-span-2 rounded-lg px-4 py-3 text-center text-sm font-semibold
-            ${diff < 0 ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' : 'bg-rose-50 text-rose-700 border border-rose-200'}"
+          <div
+            className="col-span-2 rounded-lg px-4 py-3 text-center text-sm font-semibold"
             style={{
               backgroundColor: diff < 0 ? '#f0fdf4' : '#fff1f2',
               color: diff < 0 ? '#15803d' : '#be123c',

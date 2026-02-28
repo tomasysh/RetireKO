@@ -42,7 +42,7 @@ export default function StepExpense({ onNext }: StepProps) {
 
   return (
     <div>
-      <StepHeader emoji="🏡" step={2} title={t('stepExpense.title')} />
+      <StepHeader emoji="🏡" step={3} title={t('stepExpense.title')} />
 
       <div>
         <label className="block text-sm font-medium text-gray-700 mb-1">

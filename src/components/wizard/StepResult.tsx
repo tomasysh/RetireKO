@@ -22,7 +22,7 @@ export default function StepResult() {
 
   return (
     <div>
-      <StepHeader emoji="🎯" step={4} title={t('stepResult.title')} />
+      <StepHeader emoji="🎯" step={5} title={t('stepResult.title')} />
 
       <p className="text-gray-600 mb-5 text-sm">{t('stepResult.congratulations')}</p>
 
@@ -57,12 +57,27 @@ export default function StepResult() {
         </div>
       </div>
 
+      {/* Life expectancy callout */}
+      {state.retirementYears && state.lifeExpectancy && state.retireAge && (
+        <div className="bg-sky-50 border border-sky-200 rounded-xl px-4 py-3 mb-5 flex items-start gap-3">
+          <span className="text-2xl flex-shrink-0">🕯️</span>
+          <p className="text-sm text-sky-700 leading-relaxed">
+            {t('stepResult.lifeExpectancyNote', {
+              le: state.lifeExpectancy,
+              retireAge: state.retireAge,
+              years: state.retirementYears,
+            })}
+          </p>
+        </div>
+      )}
+
       {/* Assumptions */}
       <div className="bg-gray-50 border border-gray-200 rounded-lg px-4 py-4 mb-5">
         <h3 className="text-sm font-semibold text-gray-700 mb-2">{t('stepResult.assumptions')}</h3>
         <ul className="text-sm text-gray-600 space-y-1">
           <li>• {t('stepResult.assumptionInflation', { rate: state.inflationRate })}</li>
           <li>• {t('stepResult.assumptionReturn', { rate: state.annualReturn })}</li>
+          {state.retirementYears && <li>• {t('stepResult.assumptionRetirementYears', { years: state.retirementYears })}</li>}
           <li>• {t('stepResult.assumptionRule')}</li>
         </ul>
       </div>

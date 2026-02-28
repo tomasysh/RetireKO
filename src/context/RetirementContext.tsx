@@ -1,8 +1,19 @@
 import { createContext, useContext, useReducer, type ReactNode } from 'react';
+import {
+  LIFE_EXPECTANCY,
+  type Gender,
+  calculateFutureExpense,
+  calculateRetirementTarget,
+  calculateMonthlySaving,
+} from '../utils/calculations';
+export type { Gender } from '../utils/calculations';
 
 export interface RetirementState {
   currentAge: number | null;
   retireAge: number | null;
+  gender: Gender | null;
+  lifeExpectancy: number | null;
+  retirementYears: number | null;
   monthlyExpense: number | null;
   inflationRate: number;
   annualReturn: number;
@@ -16,6 +27,7 @@ export interface RetirementState {
 
 type Action =
   | { type: 'SET_AGE'; currentAge: number; retireAge: number }
+  | { type: 'SET_GENDER'; gender: Gender }
   | { type: 'SET_EXPENSE'; monthlyExpense: number }
   | { type: 'SET_INFLATION'; inflationRate: number }
   | { type: 'SET_RETURN'; annualReturn: number }
@@ -25,6 +37,9 @@ type Action =
 const initialState: RetirementState = {
   currentAge: null,
   retireAge: null,
+  gender: null,
+  lifeExpectancy: null,
+  retirementYears: null,
   monthlyExpense: null,
   inflationRate: 2,
   annualReturn: 6,
@@ -35,27 +50,22 @@ const initialState: RetirementState = {
   monthlySaving: null,
 };
 
-function calculateFutureExpense(annualExpense: number, inflationRate: number, years: number): number {
-  return annualExpense * Math.pow(1 + inflationRate / 100, years);
-}
-
-function calculateRetirementTarget(futureAnnualExpense: number): number {
-  return futureAnnualExpense * 25; // 4% rule
-}
-
-function calculateMonthlySaving(target: number, years: number, annualReturn: number = 0.06): number {
-  const monthlyReturn = annualReturn / 12;
-  const months = years * 12;
-  if (monthlyReturn === 0) return target / months;
-  // Future value of annuity formula: FV = PMT * ((1+r)^n - 1) / r
-  return target / ((Math.pow(1 + monthlyReturn, months) - 1) / monthlyReturn);
-}
-
 function reducer(state: RetirementState, action: Action): RetirementState {
   switch (action.type) {
     case 'SET_AGE': {
       const yearsToRetire = action.retireAge - action.currentAge;
-      return { ...state, currentAge: action.currentAge, retireAge: action.retireAge, yearsToRetire };
+      // Recompute retirementYears if gender already set
+      const retirementYears = state.lifeExpectancy != null
+        ? Math.max(Math.round(state.lifeExpectancy - action.retireAge), 1)
+        : null;
+      return { ...state, currentAge: action.currentAge, retireAge: action.retireAge, yearsToRetire, retirementYears };
+    }
+    case 'SET_GENDER': {
+      const le = LIFE_EXPECTANCY[action.gender];
+      const retirementYears = state.retireAge != null
+        ? Math.max(Math.round(le - state.retireAge), 1)
+        : null;
+      return { ...state, gender: action.gender, lifeExpectancy: le, retirementYears };
     }
     case 'SET_EXPENSE': {
       const annualExpense = action.monthlyExpense * 12;
@@ -66,9 +76,9 @@ function reducer(state: RetirementState, action: Action): RetirementState {
     case 'SET_RETURN':
       return { ...state, annualReturn: action.annualReturn };
     case 'CALCULATE': {
-      if (state.annualExpense == null || state.yearsToRetire == null) return state;
+      if (state.annualExpense == null || state.yearsToRetire == null || state.retirementYears == null) return state;
       const futureAnnualExpense = calculateFutureExpense(state.annualExpense, state.inflationRate, state.yearsToRetire);
-      const retirementTarget = calculateRetirementTarget(futureAnnualExpense);
+      const retirementTarget = calculateRetirementTarget(futureAnnualExpense, state.retirementYears, state.annualReturn, state.inflationRate);
       const monthlySaving = calculateMonthlySaving(retirementTarget, state.yearsToRetire, state.annualReturn / 100);
       return { ...state, futureAnnualExpense, retirementTarget, monthlySaving };
     }
