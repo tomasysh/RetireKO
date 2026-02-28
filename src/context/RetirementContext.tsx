@@ -6,6 +6,7 @@ import {
   calculateRetirementTarget,
   calculateMinimumTarget,
   calculateMonthlySaving,
+  calculateFutureValueOfSavings,
 } from '../utils/calculations';
 export type { Gender } from '../utils/calculations';
 
@@ -18,13 +19,15 @@ export interface RetirementState {
   monthlyExpense: number | null;
   inflationRate: number;
   annualReturn: number;
+  currentSavings: number;
   // Computed results
   yearsToRetire: number | null;
   annualExpense: number | null;
   futureAnnualExpense: number | null;
   retirementTarget: number | null;    // 4% rule = 25×
   minimumTarget: number | null;       // Finite annuity spend-down
-  monthlySaving: number | null;
+  futureValueOfSavings: number | null; // Current savings grown to retirement
+  monthlySaving: number | null;       // Monthly saving needed (after existing savings)
 }
 
 type Action =
@@ -33,6 +36,7 @@ type Action =
   | { type: 'SET_EXPENSE'; monthlyExpense: number }
   | { type: 'SET_INFLATION'; inflationRate: number }
   | { type: 'SET_RETURN'; annualReturn: number }
+  | { type: 'SET_SAVINGS'; currentSavings: number }
   | { type: 'CALCULATE' }
   | { type: 'RESET' };
 
@@ -45,11 +49,13 @@ const initialState: RetirementState = {
   monthlyExpense: null,
   inflationRate: 2,
   annualReturn: 6,
+  currentSavings: 0,
   yearsToRetire: null,
   annualExpense: null,
   futureAnnualExpense: null,
   retirementTarget: null,
   minimumTarget: null,
+  futureValueOfSavings: null,
   monthlySaving: null,
 };
 
@@ -78,6 +84,8 @@ function reducer(state: RetirementState, action: Action): RetirementState {
       return { ...state, inflationRate: action.inflationRate };
     case 'SET_RETURN':
       return { ...state, annualReturn: action.annualReturn };
+    case 'SET_SAVINGS':
+      return { ...state, currentSavings: action.currentSavings };
     case 'CALCULATE': {
       if (state.annualExpense == null || state.yearsToRetire == null) return state;
       const futureAnnualExpense = calculateFutureExpense(state.annualExpense, state.inflationRate, state.yearsToRetire);
@@ -85,8 +93,12 @@ function reducer(state: RetirementState, action: Action): RetirementState {
       const minimumTarget = state.retirementYears != null
         ? calculateMinimumTarget(futureAnnualExpense, state.retirementYears, state.annualReturn, state.inflationRate)
         : null;
-      const monthlySaving = calculateMonthlySaving(retirementTarget, state.yearsToRetire, state.annualReturn / 100);
-      return { ...state, futureAnnualExpense, retirementTarget, minimumTarget, monthlySaving };
+      const futureValueOfSavings = state.currentSavings > 0
+        ? calculateFutureValueOfSavings(state.currentSavings, state.annualReturn, state.yearsToRetire)
+        : null;
+      const adjustedTarget = Math.max(0, retirementTarget - (futureValueOfSavings ?? 0));
+      const monthlySaving = calculateMonthlySaving(adjustedTarget, state.yearsToRetire, state.annualReturn / 100);
+      return { ...state, futureAnnualExpense, retirementTarget, minimumTarget, futureValueOfSavings, monthlySaving };
     }
     case 'RESET':
       return initialState;

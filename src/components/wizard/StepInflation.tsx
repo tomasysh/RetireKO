@@ -4,6 +4,8 @@ import { useRetirement } from '../../context/RetirementContext';
 import {
   calculateFutureExpense,
   calculateRetirementTarget,
+  calculateMonthlySaving,
+  calculateFutureValueOfSavings,
   formatCurrency,
 } from '../../utils/calculations';
 import InfoBlock from '../InfoBlock';
@@ -19,6 +21,10 @@ export default function StepInflation({ onNext }: StepProps) {
 
   const [inflationRate, setInflationRate] = useState(state.inflationRate);
   const [annualReturn, setAnnualReturn] = useState(state.annualReturn);
+  const [currentSavings, setCurrentSavings] = useState(state.currentSavings);
+  const [savingsInput, setSavingsInput] = useState(
+    state.currentSavings > 0 ? String(state.currentSavings) : ''
+  );
 
   useEffect(() => {
     dispatch({ type: 'SET_INFLATION', inflationRate });
@@ -27,6 +33,10 @@ export default function StepInflation({ onNext }: StepProps) {
   useEffect(() => {
     dispatch({ type: 'SET_RETURN', annualReturn });
   }, [annualReturn, dispatch]);
+
+  useEffect(() => {
+    dispatch({ type: 'SET_SAVINGS', currentSavings });
+  }, [currentSavings, dispatch]);
 
   const futureAnnualExpense =
     state.annualExpense && state.yearsToRetire
@@ -37,9 +47,24 @@ export default function StepInflation({ onNext }: StepProps) {
     ? calculateRetirementTarget(futureAnnualExpense)
     : null;
 
+  const fvSavings =
+    currentSavings > 0 && state.yearsToRetire
+      ? calculateFutureValueOfSavings(currentSavings, annualReturn, state.yearsToRetire)
+      : null;
+
+  const adjustedTarget = retirementTarget != null
+    ? Math.max(0, retirementTarget - (fvSavings ?? 0))
+    : null;
+
+  const monthlySaving =
+    adjustedTarget != null && state.yearsToRetire
+      ? calculateMonthlySaving(adjustedTarget, state.yearsToRetire, annualReturn / 100)
+      : null;
+
   const handleNext = () => {
     dispatch({ type: 'SET_INFLATION', inflationRate });
     dispatch({ type: 'SET_RETURN', annualReturn });
+    dispatch({ type: 'SET_SAVINGS', currentSavings });
     dispatch({ type: 'CALCULATE' });
     onNext();
   };
@@ -98,6 +123,31 @@ export default function StepInflation({ onNext }: StepProps) {
         </div>
       </div>
 
+      {/* Existing savings input */}
+      <div className="mb-5">
+        <label className="block text-sm font-medium text-gray-700 mb-1">
+          {t('stepInflation.currentSavings')}
+          <span className="ml-1 text-xs text-gray-400 font-normal">{t('stepInflation.currentSavingsOptional')}</span>
+        </label>
+        <p className="text-xs text-gray-500 mb-2 leading-relaxed">{t('stepInflation.currentSavingsHint')}</p>
+        <div className="relative">
+          <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm">NT$</span>
+          <input
+            type="number"
+            min="0"
+            step="10000"
+            value={savingsInput}
+            onChange={(e) => {
+              setSavingsInput(e.target.value);
+              const val = parseFloat(e.target.value);
+              setCurrentSavings(isNaN(val) || val < 0 ? 0 : val);
+            }}
+            placeholder="0"
+            className="w-full pl-12 pr-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
+          />
+        </div>
+      </div>
+
       {futureAnnualExpense && (
         <div className="space-y-3 mb-2">
           <div className="bg-orange-50 border border-orange-200 rounded-lg px-4 py-3 text-orange-700 text-sm">
@@ -113,9 +163,28 @@ export default function StepInflation({ onNext }: StepProps) {
           {retirementTarget && (
             <div className="bg-emerald-50 border border-emerald-300 rounded-xl px-6 py-5 text-center">
               <p className="text-xs text-emerald-600 mb-1">{t('stepInflation.fourPercentExplain')}</p>
-              <p className="text-3xl md:text-4xl font-bold text-emerald-700">
+              <p className="text-3xl md:text-4xl font-bold text-emerald-700 tabular-nums">
                 {t('stepInflation.targetAmount', { amount: formatCurrency(retirementTarget) })}
               </p>
+
+              {/* Show existing savings offset if applicable */}
+              {fvSavings != null && fvSavings > 0 && (
+                <div className="mt-3 pt-3 border-t border-emerald-200 space-y-1 text-sm">
+                  <p className="text-emerald-600">
+                    {t('stepInflation.savingsGrowthNote', { amount: formatCurrency(fvSavings) })}
+                  </p>
+                  <p className="font-semibold text-emerald-800">
+                    {t('stepInflation.adjustedTarget', { amount: formatCurrency(adjustedTarget ?? 0) })}
+                  </p>
+                </div>
+              )}
+
+              {/* Monthly saving preview — shows effect of return rate */}
+              {monthlySaving != null && (
+                <p className="mt-2 text-sm text-emerald-700">
+                  {t('stepInflation.monthlySavingPreview', { amount: formatCurrency(monthlySaving) })}
+                </p>
+              )}
             </div>
           )}
         </div>

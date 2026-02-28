@@ -38,7 +38,7 @@ export function I18nProvider({ children }: { children: ReactNode }) {
       let text = getNestedValue(messages[locale] as Record<string, unknown>, key);
       if (params) {
         Object.entries(params).forEach(([k, v]) => {
-          text = text.replace(`{${k}}`, String(v));
+          text = text.replaceAll(`{${k}}`, String(v));
         });
       }
       return text;

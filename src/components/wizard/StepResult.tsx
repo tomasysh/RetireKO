@@ -102,6 +102,19 @@ export default function StepResult() {
           </div>
         </div>
 
+        {/* Existing savings offset callout */}
+        {state.futureValueOfSavings != null && state.futureValueOfSavings > 0 && (
+          <div className="bg-violet-50 border border-violet-200 rounded-xl px-4 py-3 flex items-start gap-3 mb-4">
+            <span className="text-2xl flex-shrink-0" aria-hidden="true">💰</span>
+            <p className="text-sm text-violet-700 leading-relaxed">
+              {t('stepResult.savingsOffsetNote', {
+                savings: formatCurrency(state.currentSavings),
+                future: formatCurrency(state.futureValueOfSavings),
+              })}
+            </p>
+          </div>
+        )}
+
         {/* Life expectancy callout */}
         {state.retirementYears && state.lifeExpectancy && state.retireAge && (
           <div className="bg-sky-50 border border-sky-200 rounded-xl px-4 py-3 flex items-start gap-3">

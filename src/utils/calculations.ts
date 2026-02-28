@@ -57,6 +57,18 @@ export function calculateMonthlySaving(
   return target / ((Math.pow(1 + monthlyReturn, months) - 1) / monthlyReturn);
 }
 
+/**
+ * Future value of a lump-sum current savings after `years` of growth.
+ * FV = PV × (1 + r)^n
+ */
+export function calculateFutureValueOfSavings(
+  currentSavings: number,
+  annualReturn: number,  // percent e.g. 6
+  years: number
+): number {
+  return currentSavings * Math.pow(1 + annualReturn / 100, years);
+}
+
 export function formatCurrency(amount: number): string {
   return Math.round(amount).toLocaleString('zh-TW');
 }

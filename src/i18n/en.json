@@ -9,7 +9,8 @@
     "downloadPdf": "Download PDF Report",
     "step": "Step",
     "of": "of",
-    "learnMore": "💡 Learn More"
+    "learnMore": "💡 Learn More",
+    "footerCreator": "zettelcousin"
   },
   "stepGender": {
     "title": "Life Expectancy",
@@ -68,6 +69,12 @@
     "retirementTarget": "Your Retirement Target",
     "targetAmount": "NT$ {amount}",
     "fourPercentExplain": "Annual expense × 25 = Retirement target (4% Rule)",
+    "currentSavings": "Existing Retirement Savings",
+    "currentSavingsOptional": "(optional)",
+    "currentSavingsHint": "Any savings or investments already earmarked for retirement. With compound growth, they'll offset part of your target and reduce your required monthly savings.",
+    "savingsGrowthNote": "✨ Estimated value at retirement: NT$ {amount} — already deducted",
+    "adjustedTarget": "Still need to accumulate: NT$ {amount}",
+    "monthlySavingPreview": "📌 Estimated monthly savings needed: NT$ {amount}",
     "infoContent": "Inflation is a \"silent thief\" that erodes purchasing power each year. The \"4% Rule\" comes from the 1998 Trinity Study: research showed that if you withdraw no more than 4% of your retirement fund per year (i.e., save 25× your annual expenses), your money has a 95%+ historical chance of lasting 30+ years — and may even keep growing. This assumes the retirement fund is invested in a diversified stock-bond portfolio, not just sitting in a savings account.",
     "infoLinkTrinity": "Trinity Study (Wikipedia)",
     "infoLink4pct": "The 4% Rule explained (Investopedia)"
@@ -83,6 +90,7 @@
     "monthlySavingNote": "(Assuming {rate}% annual return)",
     "assumptions": "Calculation Assumptions",
     "lifeExpectancyNote": "Based on Taiwan's average lifespan of {le} years, your fund needs to last {years} years (age {retireAge} → {le}). The 4% Rule target safely covers this period while your assets continue to grow.",
+    "savingsOffsetNote": "You have NT$ {savings} in existing retirement savings. With compound growth at your expected return rate, it's projected to reach NT$ {future} by retirement — already deducted from your required monthly savings.",
     "assumptionInflation": "Inflation rate: {rate}%",
     "assumptionRetirementYears": "Retirement duration: {years} years (based on life expectancy)",
     "assumptionReturn": "Annual investment return: {rate}%",

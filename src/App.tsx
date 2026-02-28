@@ -40,6 +40,7 @@ function App() {
             className="flex items-center gap-1.5 hover:opacity-80 transition-opacity focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 rounded"
           >
             <span>A project by</span>
+            <span className="font-medium text-gray-600">{t('app.footerCreator')}</span>
             <img
               src="/zettelcousin-logo.png"
               alt="卡片表哥 Zettel Cousin"
