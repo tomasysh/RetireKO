@@ -95,7 +95,7 @@ export default function StepAge({ onNext }: StepProps) {
         links={[
           {
             label: t('stepAge.infoLinkCompound'),
-            url: 'https://www.investopedia.com/terms/c/compoundinterest.asp',
+            url: 'https://zh.wikipedia.org/zh-tw/%E8%A4%87%E5%88%A9',
           },
         ]}
       />

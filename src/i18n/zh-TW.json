@@ -19,7 +19,7 @@
     "currentAgePlaceholder": "例如：30",
     "retireAgePlaceholder": "例如：60",
     "infoContent": "知道你的年齡和預計退休時間，才能算出「資產累積期」—— 也就是複利為你工作的時間。越早開始，每月只需存越少的錢就能達到目標。愛因斯坦曾稱複利為「世界第八大奇蹟，不了解它的人付出利息，了解它的人賺取利息」。",
-    "infoLinkCompound": "複利效應是什麼？(Investopedia)",
+    "infoLinkCompound": "複利（維基百科）",
     "validation": {
       "ageRequired": "請輸入目前年齡",
       "ageRange": "年齡需在 18 到 80 歲之間",
@@ -37,7 +37,7 @@
     "currency": "NT$",
     "perMonth": "/ 月",
     "infoContent": "退休規劃的核心是找到你「現在」覺得舒適的生活基準。為什麼不用考慮通膨？因為下一步我們會幫你計算！你填的這個數字代表的是「今天的購買力」，系統會根據你設定的通膨率，自動換算成退休那年實際需要的金額。「替代率」概念建議退休後花費約為退休前收入的 70-80%，但更精確的方式是直接從你的理想生活出發。",
-    "infoLinkReplacement": "退休替代率概念 (Investopedia)",
+    "infoLinkReplacement": "退休所得替代率（MoneyDJ 財經百科）",
     "validation": {
       "required": "請輸入每月理想生活費",
       "min": "每月生活費至少需要 NT$ 5,000",
@@ -55,8 +55,8 @@
     "targetAmount": "NT$ {amount}",
     "fourPercentExplain": "年生活費 × 25 = 退休目標（4% 法則）",
     "infoContent": "通膨是「無聲的小偷」，每年偷走一點購買力。「4% 法則」源自 1998 年的 Trinity Study：研究顯示，若每年從退休金提取不超過 4%（即準備 25 倍年生活費），在歷史上 95% 以上的情境下，資金可維持 30 年以上、甚至持續增長。前提是退休金保持在股債平衡的投資組合中，而非放在定存。",
-    "infoLinkTrinity": "Trinity Study 原始研究（維基百科）",
-    "infoLink4pct": "4% 法則詳解（Investopedia）"
+    "infoLinkTrinity": "三一研究（維基百科）",
+    "infoLink4pct": "4% 法則詳解（CMoney）"
   },
   "stepResult": {
     "title": "你的退休實踐計畫 🎯",

@@ -217,9 +217,28 @@ export default function RetirementPDFDownload() {
         />
       }
       fileName="RetireKO-退休計畫.pdf"
-      className="flex-1 px-6 py-3 rounded-lg text-white bg-emerald-500 hover:bg-emerald-600 transition-colors cursor-pointer font-medium text-center"
+      className="flex-1"
     >
-      {({ loading }) => (loading ? '...' : t('app.downloadPdf'))}
+      {({ loading }) =>
+        loading ? (
+          <span className="flex items-center justify-center gap-2 w-full px-6 py-3 rounded-lg text-white bg-emerald-400 cursor-wait font-medium select-none">
+            <svg
+              className="animate-spin h-4 w-4 text-white flex-shrink-0"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+            </svg>
+            <span className="animate-pulse">{locale === 'zh-TW' ? '產生 PDF 中…' : 'Generating PDF…'}</span>
+          </span>
+        ) : (
+          <span className="flex items-center justify-center gap-2 w-full px-6 py-3 rounded-lg text-white bg-emerald-500 hover:bg-emerald-600 transition-colors cursor-pointer font-medium">
+            📄 {t('app.downloadPdf')}
+          </span>
+        )
+      }
     </PDFDownloadLink>
   );
 }

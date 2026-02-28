@@ -80,7 +80,7 @@ export default function StepExpense({ onNext }: StepProps) {
         links={[
           {
             label: t('stepExpense.infoLinkReplacement'),
-            url: 'https://www.investopedia.com/terms/r/replacement-rate.asp',
+            url: 'https://www.moneydj.com/KMDJ/Wiki/WikiViewer.aspx?KeyID=db8059e4-1079-4ab4-9c95-6c66e0d49282',
           },
         ]}
       />

@@ -120,11 +120,11 @@ export default function StepInflation({ onNext }: StepProps) {
         links={[
           {
             label: t('stepInflation.infoLinkTrinity'),
-            url: 'https://en.wikipedia.org/wiki/Trinity_study',
+            url: 'https://zh.wikipedia.org/zh-tw/%E4%B8%89%E4%B8%80%E7%A0%94%E7%A9%B6',
           },
           {
             label: t('stepInflation.infoLink4pct'),
-            url: 'https://www.investopedia.com/terms/f/four-percent-rule.asp',
+            url: 'https://www.cmoney.tw/notes/note-detail.aspx?nid=232509',
           },
         ]}
       />
