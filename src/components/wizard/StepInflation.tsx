@@ -115,19 +115,7 @@ export default function StepInflation({ onNext }: StepProps) {
         </div>
       )}
 
-      <InfoBlock
-        content={t('stepInflation.infoContent')}
-        links={[
-          {
-            label: t('stepInflation.infoLinkTrinity'),
-            url: 'https://zh.wikipedia.org/zh-tw/%E4%B8%89%E4%B8%80%E7%A0%94%E7%A9%B6',
-          },
-          {
-            label: t('stepInflation.infoLink4pct'),
-            url: 'https://www.cmoney.tw/notes/note-detail.aspx?nid=232509',
-          },
-        ]}
-      />
+      <InfoBlock content={t('stepInflation.infoContent')} />
 
       <div className="mt-6 flex justify-end">
         <button

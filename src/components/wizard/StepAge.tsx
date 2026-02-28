@@ -90,15 +90,7 @@ export default function StepAge({ onNext }: StepProps) {
         )}
       </div>
 
-      <InfoBlock
-        content={t('stepAge.infoContent')}
-        links={[
-          {
-            label: t('stepAge.infoLinkCompound'),
-            url: 'https://zh.wikipedia.org/zh-tw/%E8%A4%87%E5%88%A9',
-          },
-        ]}
-      />
+      <InfoBlock content={t('stepAge.infoContent')} />
 
       <div className="mt-6 flex justify-end">
         <button

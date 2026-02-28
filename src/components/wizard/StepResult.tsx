@@ -4,6 +4,7 @@ import { useWizard } from '../../context/WizardContext';
 import { formatCurrency } from '../../utils/calculations';
 import RetirementPDFDownload from '../pdf/RetirementPDF';
 import StepHeader from '../ui/StepHeader';
+import ScenarioSimulator from '../ScenarioSimulator';
 
 export default function StepResult() {
   const { t } = useI18n();
@@ -65,6 +66,9 @@ export default function StepResult() {
           <li>• {t('stepResult.assumptionRule')}</li>
         </ul>
       </div>
+
+      {/* Scenario simulator */}
+      <ScenarioSimulator />
 
       {/* Disclaimer */}
       <p className="text-xs text-gray-400 mb-6 leading-relaxed">

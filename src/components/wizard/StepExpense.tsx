@@ -75,15 +75,7 @@ export default function StepExpense({ onNext }: StepProps) {
         </div>
       )}
 
-      <InfoBlock
-        content={t('stepExpense.infoContent')}
-        links={[
-          {
-            label: t('stepExpense.infoLinkReplacement'),
-            url: 'https://www.moneydj.com/KMDJ/Wiki/WikiViewer.aspx?KeyID=db8059e4-1079-4ab4-9c95-6c66e0d49282',
-          },
-        ]}
-      />
+      <InfoBlock content={t('stepExpense.infoContent')} />
 
       <div className="mt-6 flex justify-end">
         <button

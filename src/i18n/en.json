@@ -72,5 +72,20 @@
     "assumptionReturn": "Annual investment return: {rate}%",
     "assumptionRule": "Based on the 4% Rule (Trinity Study, 1998)",
     "disclaimer": "The above calculations are for reference only and do not constitute investment advice. Please consult a professional financial advisor for actual retirement planning."
+  },
+  "scenario": {
+    "title": "What If?",
+    "subtitle": "Drag the sliders to instantly compare how different choices affect your monthly savings.",
+    "startLabel": "Investment start time",
+    "returnLabel": "Annual return rate",
+    "same": "Same as now",
+    "earlier": "{n} years earlier",
+    "later": "{n} years later",
+    "originalSaving": "Original monthly savings",
+    "newSaving": "Scenario monthly savings",
+    "saveLess": "🎉 Save NT$ {amount} less per month!",
+    "saveMore": "⚠️ Need NT$ {amount} more per month",
+    "noChange": "Same as original plan",
+    "invalid": "Not enough time — please adjust the slider (accumulation years cannot be zero or negative)"
   }
 }
