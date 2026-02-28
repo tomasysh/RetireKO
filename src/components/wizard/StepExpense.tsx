@@ -13,23 +13,25 @@ export default function StepExpense({ onNext }: StepProps) {
   const { t } = useI18n();
   const { state, dispatch } = useRetirement();
 
-  const [monthlyExpense, setMonthlyExpense] = useState(state.monthlyExpense?.toString() ?? '');
+  const [expenseRaw, setExpenseRaw] = useState(state.monthlyExpense ?? 0);
+  const [expenseInput, setExpenseInput] = useState(
+    state.monthlyExpense && state.monthlyExpense > 0 ? state.monthlyExpense.toLocaleString('zh-TW') : ''
+  );
   const [errors, setErrors] = useState<Record<string, string>>({});
 
-  const annualExpense = monthlyExpense ? parseInt(monthlyExpense) * 12 : null;
+  const annualExpense = expenseRaw > 0 ? expenseRaw * 12 : null;
 
   useEffect(() => {
-    const me = parseInt(monthlyExpense);
-    if (!isNaN(me) && me > 0) {
-      dispatch({ type: 'SET_EXPENSE', monthlyExpense: me });
+    if (expenseRaw > 0) {
+      dispatch({ type: 'SET_EXPENSE', monthlyExpense: expenseRaw });
     }
-  }, [monthlyExpense, dispatch]);
+  }, [expenseRaw, dispatch]);
 
   const validate = () => {
     const newErrors: Record<string, string> = {};
-    const me = parseInt(monthlyExpense);
+    const me = expenseRaw;
 
-    if (!monthlyExpense) newErrors.expense = t('stepExpense.validation.required');
+    if (!expenseInput) newErrors.expense = t('stepExpense.validation.required');
     else if (me < 5000) newErrors.expense = t('stepExpense.validation.min');
     else if (me > 1000000) newErrors.expense = t('stepExpense.validation.max');
 
@@ -54,9 +56,15 @@ export default function StepExpense({ onNext }: StepProps) {
             {t('stepExpense.currency')}
           </span>
           <input
-            type="number"
-            value={monthlyExpense}
-            onChange={(e) => setMonthlyExpense(e.target.value)}
+            type="text"
+            inputMode="numeric"
+            value={expenseInput}
+            onChange={(e) => {
+              const raw = e.target.value.replace(/[^\d]/g, '');
+              const num = raw === '' ? 0 : parseInt(raw, 10);
+              setExpenseInput(raw === '' ? '' : num.toLocaleString('zh-TW'));
+              setExpenseRaw(num);
+            }}
             placeholder={t('stepExpense.monthlyPlaceholder')}
             className="w-full pl-14 pr-16 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none text-lg"
           />
