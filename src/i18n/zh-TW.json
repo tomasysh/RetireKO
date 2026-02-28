@@ -1,0 +1,79 @@
+{
+  "app": {
+    "title": "RetireKO",
+    "subtitle": "一拳擊倒你的退休焦慮",
+    "startButton": "開始計算",
+    "next": "下一步",
+    "prev": "上一步",
+    "restart": "重新計算",
+    "downloadPdf": "下載 PDF 報表",
+    "step": "步驟",
+    "of": "/ 共"
+  },
+  "stepAge": {
+    "title": "基本年齡設定",
+    "currentAge": "你目前幾歲？",
+    "retireAge": "你預期幾歲退休？",
+    "yearsToRetire": "距離退休還有 {years} 年",
+    "currentAgePlaceholder": "例如：30",
+    "retireAgePlaceholder": "例如：60",
+    "whyAsk": "為什麼問這個問題？",
+    "whyAskContent": "知道你的年齡和預期退休時間，才能計算「資產累積期」—— 也就是你還有多少時間可以為退休做準備。時間是複利最強大的盟友。",
+    "theory": "理論支撐",
+    "theoryContent": "時間價值（Time Value of Money）是財務規劃的基礎概念。越早開始準備，你需要每月投入的金額就越少，因為時間會讓複利效應為你工作。",
+    "validation": {
+      "ageRequired": "請輸入目前年齡",
+      "ageRange": "年齡需在 18 到 80 歲之間",
+      "retireRequired": "請輸入預期退休年齡",
+      "retireRange": "退休年齡需在 30 到 100 歲之間",
+      "retireAfterCurrent": "退休年齡必須大於目前年齡"
+    }
+  },
+  "stepExpense": {
+    "title": "理想退休生活費",
+    "monthlyExpense": "退休後每月理想生活費是多少？",
+    "description": "想像你已經退休，不用再繳學貸、房貸等固定借款。純粹在「食衣住行育樂」上，每月花多少錢會讓你覺得舒適自在？",
+    "annualExpense": "換算年花費：NT$ {amount}",
+    "monthlyPlaceholder": "例如：40000",
+    "currency": "NT$",
+    "perMonth": "/ 月",
+    "whyAsk": "為什麼問這個問題？",
+    "whyAskContent": "退休規劃的核心是了解你「需要多少錢才能過得舒服」。這不是越多越好，而是找到讓你安心的數字。每個人的理想生活不同，這個金額完全因人而異。",
+    "theory": "理論支撐",
+    "theoryContent": "「替代率」（Replacement Ratio）是退休規劃中的重要概念。一般建議退休後的花費約為退休前收入的 70-80%，但更精確的做法是直接估算你想要的生活品質所需的金額。",
+    "validation": {
+      "required": "請輸入每月理想生活費",
+      "min": "每月生活費至少需要 NT$ 5,000",
+      "max": "請輸入合理的金額（低於 NT$ 1,000,000）"
+    }
+  },
+  "stepInflation": {
+    "title": "通膨推估與退休目標",
+    "inflationRate": "預估年通膨率",
+    "inflationDescription": "通貨膨脹會讓錢變薄。今天的 NT$ 40,000 在 30 年後購買力可能只剩一半。我們用通膨率來推算你退休那年實際需要多少錢。",
+    "futureExpense": "退休時的預估年生活費：NT$ {amount}",
+    "retirementTarget": "你的退休目標金額",
+    "targetAmount": "NT$ {amount}",
+    "whyAsk": "為什麼問這個問題？",
+    "whyAskContent": "如果忽略通膨，你準備的退休金可能不夠用。通膨就像是無聲的小偷，每年偷走你一點購買力。我們必須把這個因素計算進去。",
+    "theory": "理論支撐",
+    "theoryContent": "4% 法則（The 4% Rule）源自 1998 年的 Trinity Study。研究發現，如果你每年從退休金中提取不超過 4%（等於準備 25 年的生活費），在大多數市場情境下，你的資金可以維持 30 年以上不會枯竭，甚至可能持續增長。這個法則假設你的退休金投資在股票與債券的平衡組合中。",
+    "fourPercentRule": "4% 法則說明",
+    "fourPercentExplain": "將未來年生活費 × 25 = 退休目標金額。這代表每年只提取總資產的 4%，根據歷史數據，有超過 95% 的機率資金可維持 30 年以上。"
+  },
+  "stepResult": {
+    "title": "你的退休實踐計畫",
+    "congratulations": "計算完成！以下是你的專屬退休藍圖：",
+    "targetAmount": "需準備的退休金",
+    "yearsToRetire": "距離退休",
+    "years": "{count} 年",
+    "futureAnnualExpense": "退休時預估年開銷",
+    "monthlySaving": "建議每月儲蓄",
+    "monthlySavingNote": "（以年化報酬率 {rate}% 估算）",
+    "assumptions": "計算假設",
+    "assumptionInflation": "年通膨率：{rate}%",
+    "assumptionRule": "採用 4% 法則（Trinity Study）",
+    "assumptionReturn": "投資年化報酬率假設：6%（僅供每月儲蓄參考）",
+    "disclaimer": "⚠️ 以上計算僅供參考，不構成任何投資建議。實際退休規劃應諮詢專業財務顧問。"
+  }
+}
