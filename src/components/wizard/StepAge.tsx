@@ -47,7 +47,7 @@ export default function StepAge({ onNext }: StepProps) {
   };
 
   return (
-    <div>
+    <div onKeyDown={(e) => { if (e.key === 'Enter') validate(); }}>
       <StepHeader emoji="⏳" step={1} title={t('stepAge.title')} />
 
       <div className="space-y-5">

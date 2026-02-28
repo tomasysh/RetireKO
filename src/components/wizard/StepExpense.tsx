@@ -41,7 +41,7 @@ export default function StepExpense({ onNext }: StepProps) {
   };
 
   return (
-    <div>
+    <div onKeyDown={(e) => { if (e.key === 'Enter') validate(); }}>
       <StepHeader emoji="🏡" step={3} title={t('stepExpense.title')} />
 
       <div>

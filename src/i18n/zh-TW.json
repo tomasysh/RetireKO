@@ -64,6 +64,7 @@
     "annualReturn": "預估年化投資報酬率",
     "annualReturnHint": "影響「每月需存多少錢」。參考：VT（全球股票 ETF）歷史年化約 10%；台灣 0050 歷史年化約 12%（均為名目報酬率，未扣通膨）。",
     "retirementYearsNote": "📅 根據你的平均餘命，退休後需支撐約 {years} 年",
+    "futureExpense": "退休時的預估年生活費：NT$ {amount}",
     "retirementTarget": "你的退休目標金額",
     "targetAmount": "NT$ {amount}",
     "fourPercentExplain": "年生活費 × 25 = 退休目標（4% 法則）",

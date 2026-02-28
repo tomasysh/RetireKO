@@ -49,15 +49,15 @@ export default function ScenarioSimulator() {
   };
 
   return (
-    <div className="mt-5 rounded-xl border border-indigo-200 bg-indigo-50 p-5">
-      <h3 className="text-indigo-700 font-bold text-base mb-1">🔭 {t('scenario.title')}</h3>
-      <p className="text-xs text-indigo-500 mb-4 leading-relaxed">{t('scenario.subtitle')}</p>
+    <div className="mt-5 rounded-xl border-2 border-violet-200 bg-white p-5">
+      <h3 className="text-violet-700 font-bold text-base mb-1">🔭 {t('scenario.title')}</h3>
+      <p className="text-xs text-violet-400 mb-4 leading-relaxed">{t('scenario.subtitle')}</p>
 
       {/* Year offset slider */}
       <div className="mb-4">
-        <label className="block text-sm font-medium text-indigo-800 mb-1">
+        <label className="block text-sm font-medium text-gray-700 mb-1">
           {t('scenario.startLabel')}：
-          <span className="font-bold">{yearLabel(yearOffset)}</span>
+          <span className="font-bold text-violet-600">{yearLabel(yearOffset)}</span>
         </label>
         <input
           type="range"
@@ -66,9 +66,9 @@ export default function ScenarioSimulator() {
           step={1}
           value={yearOffset}
           onChange={(e) => setYearOffset(parseInt(e.target.value))}
-          className="w-full h-2 rounded-lg appearance-none cursor-pointer accent-indigo-500"
+          className="w-full h-2 rounded-lg appearance-none cursor-pointer accent-violet-500 bg-violet-100"
         />
-        <div className="flex justify-between text-xs text-indigo-400 mt-1">
+        <div className="flex justify-between text-xs text-gray-400 mt-1">
           <span>{t('scenario.earlier', { n: 10 })}</span>
           <span>{t('scenario.same')}</span>
           <span>{t('scenario.later', { n: 10 })}</span>
@@ -77,9 +77,9 @@ export default function ScenarioSimulator() {
 
       {/* Return rate slider */}
       <div className="mb-5">
-        <label className="block text-sm font-medium text-indigo-800 mb-1">
+        <label className="block text-sm font-medium text-gray-700 mb-1">
           {t('scenario.returnLabel')}：
-          <span className="font-bold text-indigo-600">{returnRate}%</span>
+          <span className="font-bold text-violet-600">{returnRate}%</span>
         </label>
         <input
           type="range"
@@ -88,9 +88,9 @@ export default function ScenarioSimulator() {
           step={0.5}
           value={returnRate}
           onChange={(e) => setReturnRate(parseFloat(e.target.value))}
-          className="w-full h-2 rounded-lg appearance-none cursor-pointer accent-indigo-500"
+          className="w-full h-2 rounded-lg appearance-none cursor-pointer accent-violet-500 bg-violet-100"
         />
-        <div className="flex justify-between text-xs text-indigo-400 mt-1">
+        <div className="flex justify-between text-xs text-gray-400 mt-1">
           <span>2%</span>
           <span>15%</span>
         </div>

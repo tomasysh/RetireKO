@@ -5,6 +5,7 @@ import { formatCurrency } from '../../utils/calculations';
 import RetirementPDFDownload from '../pdf/RetirementPDF';
 import StepHeader from '../ui/StepHeader';
 import ScenarioSimulator from '../ScenarioSimulator';
+import ShareCard from '../ShareCard';
 
 export default function StepResult() {
   const { t } = useI18n();
@@ -98,6 +99,7 @@ export default function StepResult() {
         >
           {t('app.restart')}
         </button>
+        <ShareCard />
         <RetirementPDFDownload />
       </div>
     </div>

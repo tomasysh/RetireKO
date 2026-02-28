@@ -64,6 +64,7 @@
     "annualReturn": "Estimated Annual Investment Return",
     "annualReturnHint": "This affects how much you need to save monthly. Reference: VT (Global Stock ETF) ~10% historical annual return; Taiwan 0050 ~12% historical annual return (both nominal, before inflation adjustment).",
     "retirementYearsNote": "📅 Based on your life expectancy, your fund must last ~{years} years in retirement",
+    "futureExpense": "Estimated annual expense at retirement: NT$ {amount}",
     "retirementTarget": "Your Retirement Target",
     "targetAmount": "NT$ {amount}",
     "fourPercentExplain": "Annual expense × 25 = Retirement target (4% Rule)",
