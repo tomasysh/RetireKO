@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useI18n } from '../../context/I18nContext';
 import { useRetirement } from '../../context/RetirementContext';
 import InfoBlock from '../InfoBlock';
+import StepHeader from '../ui/StepHeader';
 
 interface StepProps {
   onNext: () => void;
@@ -47,7 +48,7 @@ export default function StepAge({ onNext }: StepProps) {
 
   return (
     <div>
-      <h2 className="text-2xl font-bold text-gray-800 mb-6">{t('stepAge.title')}</h2>
+      <StepHeader emoji="⏳" step={1} title={t('stepAge.title')} />
 
       <div className="space-y-5">
         <div>
@@ -90,10 +91,13 @@ export default function StepAge({ onNext }: StepProps) {
       </div>
 
       <InfoBlock
-        whyTitle={t('stepAge.whyAsk')}
-        whyContent={t('stepAge.whyAskContent')}
-        theoryTitle={t('stepAge.theory')}
-        theoryContent={t('stepAge.theoryContent')}
+        content={t('stepAge.infoContent')}
+        links={[
+          {
+            label: t('stepAge.infoLinkCompound'),
+            url: 'https://www.investopedia.com/terms/c/compoundinterest.asp',
+          },
+        ]}
       />
 
       <div className="mt-6 flex justify-end">

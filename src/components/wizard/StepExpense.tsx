@@ -3,6 +3,7 @@ import { useI18n } from '../../context/I18nContext';
 import { useRetirement } from '../../context/RetirementContext';
 import { formatCurrency } from '../../utils/calculations';
 import InfoBlock from '../InfoBlock';
+import StepHeader from '../ui/StepHeader';
 
 interface StepProps {
   onNext: () => void;
@@ -41,13 +42,13 @@ export default function StepExpense({ onNext }: StepProps) {
 
   return (
     <div>
-      <h2 className="text-2xl font-bold text-gray-800 mb-4">{t('stepExpense.title')}</h2>
-      <p className="text-gray-600 mb-6 leading-relaxed">{t('stepExpense.description')}</p>
+      <StepHeader emoji="🏡" step={2} title={t('stepExpense.title')} />
 
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-2">
+        <label className="block text-sm font-medium text-gray-700 mb-1">
           {t('stepExpense.monthlyExpense')}
         </label>
+        <p className="text-xs text-gray-500 mb-3 leading-relaxed">{t('stepExpense.hint')}</p>
         <div className="relative">
           <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 font-medium">
             {t('stepExpense.currency')}
@@ -75,10 +76,13 @@ export default function StepExpense({ onNext }: StepProps) {
       )}
 
       <InfoBlock
-        whyTitle={t('stepExpense.whyAsk')}
-        whyContent={t('stepExpense.whyAskContent')}
-        theoryTitle={t('stepExpense.theory')}
-        theoryContent={t('stepExpense.theoryContent')}
+        content={t('stepExpense.infoContent')}
+        links={[
+          {
+            label: t('stepExpense.infoLinkReplacement'),
+            url: 'https://www.investopedia.com/terms/r/replacement-rate.asp',
+          },
+        ]}
       />
 
       <div className="mt-6 flex justify-end">

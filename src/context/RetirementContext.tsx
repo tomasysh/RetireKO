@@ -5,6 +5,7 @@ export interface RetirementState {
   retireAge: number | null;
   monthlyExpense: number | null;
   inflationRate: number;
+  annualReturn: number;
   // Computed results
   yearsToRetire: number | null;
   annualExpense: number | null;
@@ -17,6 +18,7 @@ type Action =
   | { type: 'SET_AGE'; currentAge: number; retireAge: number }
   | { type: 'SET_EXPENSE'; monthlyExpense: number }
   | { type: 'SET_INFLATION'; inflationRate: number }
+  | { type: 'SET_RETURN'; annualReturn: number }
   | { type: 'CALCULATE' }
   | { type: 'RESET' };
 
@@ -25,6 +27,7 @@ const initialState: RetirementState = {
   retireAge: null,
   monthlyExpense: null,
   inflationRate: 2,
+  annualReturn: 6,
   yearsToRetire: null,
   annualExpense: null,
   futureAnnualExpense: null,
@@ -60,11 +63,13 @@ function reducer(state: RetirementState, action: Action): RetirementState {
     }
     case 'SET_INFLATION':
       return { ...state, inflationRate: action.inflationRate };
+    case 'SET_RETURN':
+      return { ...state, annualReturn: action.annualReturn };
     case 'CALCULATE': {
       if (state.annualExpense == null || state.yearsToRetire == null) return state;
       const futureAnnualExpense = calculateFutureExpense(state.annualExpense, state.inflationRate, state.yearsToRetire);
       const retirementTarget = calculateRetirementTarget(futureAnnualExpense);
-      const monthlySaving = calculateMonthlySaving(retirementTarget, state.yearsToRetire);
+      const monthlySaving = calculateMonthlySaving(retirementTarget, state.yearsToRetire, state.annualReturn / 100);
       return { ...state, futureAnnualExpense, retirementTarget, monthlySaving };
     }
     case 'RESET':

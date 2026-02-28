@@ -103,6 +103,7 @@ interface PDFDocumentProps {
   yearsToRetire: number;
   futureAnnualExpense: string;
   monthlySaving: string;
+  annualReturn: number;
   inflationRate: number;
   currentAge: number;
   retireAge: number;
@@ -160,7 +161,7 @@ function RetirementPDFDocument(props: PDFDocumentProps) {
           </View>
           <View style={styles.row}>
             <BT style={styles.label}>
-              {isZh ? '建議每月儲蓄 (6% 年化)' : 'Monthly Savings (6% return)'}
+              {isZh ? `建議每月儲蓄 (${props.annualReturn}% 年化)` : `Monthly Savings (${props.annualReturn}% return)`}
             </BT>
             <Text style={styles.value}>NT$ {props.monthlySaving}</Text>
           </View>
@@ -208,6 +209,7 @@ export default function RetirementPDFDownload() {
           futureAnnualExpense={formatCurrency(state.futureAnnualExpense)}
           monthlySaving={formatCurrency(state.monthlySaving)}
           inflationRate={state.inflationRate}
+          annualReturn={state.annualReturn}
           currentAge={state.currentAge}
           retireAge={state.retireAge}
           monthlyExpense={formatCurrency(state.monthlyExpense)}

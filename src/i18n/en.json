@@ -8,19 +8,18 @@
     "restart": "Recalculate",
     "downloadPdf": "Download PDF Report",
     "step": "Step",
-    "of": "of"
+    "of": "of",
+    "learnMore": "💡 Learn More"
   },
   "stepAge": {
-    "title": "Age Settings",
+    "title": "Let's Start with Time",
     "currentAge": "How old are you?",
     "retireAge": "At what age do you plan to retire?",
-    "yearsToRetire": "{years} years until retirement",
+    "yearsToRetire": "{years} years for compound interest to work for you 🚀",
     "currentAgePlaceholder": "e.g. 30",
     "retireAgePlaceholder": "e.g. 60",
-    "whyAsk": "Why do we ask this?",
-    "whyAskContent": "Knowing your age and expected retirement time allows us to calculate your \"accumulation period\" — how much time you have to prepare for retirement. Time is compound interest's most powerful ally.",
-    "theory": "Theory Behind This",
-    "theoryContent": "The Time Value of Money is a foundational concept in financial planning. The earlier you start, the less you need to invest each month, because time lets compound interest work for you.",
+    "infoContent": "Knowing your age and target retirement date lets us calculate your \"accumulation period\" — the time compound interest gets to work for you. The earlier you start, the less you need to save each month. Einstein reportedly called compound interest \"the eighth wonder of the world: he who understands it, earns it; he who doesn't, pays it.\"",
+    "infoLinkCompound": "What is compound interest? (Investopedia)",
     "validation": {
       "ageRequired": "Please enter your current age",
       "ageRange": "Age must be between 18 and 80",
@@ -30,17 +29,15 @@
     }
   },
   "stepExpense": {
-    "title": "Ideal Retirement Expenses",
-    "monthlyExpense": "What is your ideal monthly expense after retirement?",
-    "description": "Imagine you've already retired — no student loans or mortgage payments. Purely for food, clothing, housing, transportation, and entertainment, how much per month would make you comfortable?",
+    "title": "What Does Your Dream Retirement Look Like?",
+    "monthlyExpense": "Based on today's prices, how much per month would feel comfortably enough for you?",
+    "hint": "Think in today's money — no need to adjust for inflation yourself. Assume all loans are paid off. Just food, leisure, housing, transport, and fun.",
     "annualExpense": "Annual expense: NT$ {amount}",
     "monthlyPlaceholder": "e.g. 40000",
     "currency": "NT$",
     "perMonth": "/ month",
-    "whyAsk": "Why do we ask this?",
-    "whyAskContent": "The core of retirement planning is understanding \"how much money you need to live comfortably.\" It's not about having as much as possible — it's about finding the number that gives you peace of mind.",
-    "theory": "Theory Behind This",
-    "theoryContent": "The \"Replacement Ratio\" is a key concept in retirement planning. It's generally recommended that post-retirement spending be about 70-80% of pre-retirement income, but a more precise approach is to directly estimate the cost of your desired lifestyle.",
+    "infoContent": "The key here is \"today's prices.\" Don't try to calculate inflation yourself — that's exactly what the next step is for! The number you enter represents your purchasing power in today's dollars. The system will automatically convert it to what you'll actually need in the year you retire. The \"Replacement Ratio\" concept suggests post-retirement spending is about 70-80% of pre-retirement income, but it's more accurate to start from your own ideal lifestyle.",
+    "infoLinkReplacement": "Retirement Replacement Ratio (Investopedia)",
     "validation": {
       "required": "Please enter your ideal monthly expense",
       "min": "Monthly expense should be at least NT$ 5,000",
@@ -48,21 +45,21 @@
     }
   },
   "stepInflation": {
-    "title": "Inflation & Retirement Target",
+    "title": "Inflation × 4% Rule = Your Target",
     "inflationRate": "Estimated Annual Inflation Rate",
-    "inflationDescription": "Inflation erodes purchasing power over time. Today's NT$ 40,000 might only buy half as much in 30 years. We use the inflation rate to estimate how much you'll actually need at retirement.",
+    "inflationDescription": "Inflation shrinks purchasing power over time. NT$ 100 today may only buy NT$ 55 worth of goods in 30 years (at 2% annual inflation). We use this to convert your current expenses into what you'll actually need at retirement.",
+    "annualReturn": "Estimated Annual Investment Return",
+    "annualReturnHint": "This affects how much you need to save monthly. Reference: VT (Global Stock ETF) ~10% historical annual return; Taiwan 0050 ~12% historical annual return (both nominal, before inflation adjustment).",
     "futureExpense": "Estimated annual expense at retirement: NT$ {amount}",
     "retirementTarget": "Your Retirement Target",
     "targetAmount": "NT$ {amount}",
-    "whyAsk": "Why do we ask this?",
-    "whyAskContent": "If you ignore inflation, your retirement savings may not be enough. Inflation is like a silent thief, stealing a bit of your purchasing power every year. We must factor this in.",
-    "theory": "Theory Behind This",
-    "theoryContent": "The 4% Rule originated from the 1998 Trinity Study. It found that if you withdraw no more than 4% of your retirement fund each year (equivalent to saving 25 years' worth of expenses), your money has a greater than 95% chance of lasting 30+ years — and may even continue to grow. This rule assumes a balanced portfolio of stocks and bonds.",
-    "fourPercentRule": "The 4% Rule Explained",
-    "fourPercentExplain": "Future annual expense × 25 = Retirement target. This means withdrawing only 4% of total assets per year. Based on historical data, there's over a 95% probability the funds will last 30+ years."
+    "fourPercentExplain": "Annual expense × 25 = Retirement target (4% Rule)",
+    "infoContent": "Inflation is a \"silent thief\" that erodes purchasing power each year. The \"4% Rule\" comes from the 1998 Trinity Study: research showed that if you withdraw no more than 4% of your retirement fund per year (i.e., save 25× your annual expenses), your money has a 95%+ historical chance of lasting 30+ years — and may even keep growing. This assumes the retirement fund is invested in a diversified stock-bond portfolio, not just sitting in a savings account.",
+    "infoLinkTrinity": "Trinity Study (Wikipedia)",
+    "infoLink4pct": "The 4% Rule explained (Investopedia)"
   },
   "stepResult": {
-    "title": "Your Retirement Action Plan",
+    "title": "Your Retirement Action Plan 🎯",
     "congratulations": "Calculation complete! Here's your personalized retirement blueprint:",
     "targetAmount": "Retirement Savings Needed",
     "yearsToRetire": "Years Until Retirement",
@@ -72,8 +69,8 @@
     "monthlySavingNote": "(Assuming {rate}% annual return)",
     "assumptions": "Calculation Assumptions",
     "assumptionInflation": "Annual inflation rate: {rate}%",
-    "assumptionRule": "Based on the 4% Rule (Trinity Study)",
-    "assumptionReturn": "Assumed annual investment return: 6% (for monthly savings reference only)",
-    "disclaimer": "⚠️ The above calculations are for reference only and do not constitute investment advice. Please consult a professional financial advisor for actual retirement planning."
+    "assumptionReturn": "Annual investment return: {rate}%",
+    "assumptionRule": "Based on the 4% Rule (Trinity Study, 1998)",
+    "disclaimer": "The above calculations are for reference only and do not constitute investment advice. Please consult a professional financial advisor for actual retirement planning."
   }
 }
