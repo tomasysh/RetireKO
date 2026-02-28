@@ -31,7 +31,7 @@ function App() {
       {/* Footer */}
       <footer className="border-t border-gray-200 bg-white py-4 px-4 text-center text-xs text-gray-400">
         <div className="flex flex-col sm:flex-row items-center justify-center gap-2">
-          <span>© 2025 RetireKO</span>
+          <span>© {new Date().getFullYear()} RetireKO</span>
           <span className="hidden sm:inline" aria-hidden="true">·</span>
           <a
             href="https://zettelcousin.tw/"

@@ -109,7 +109,7 @@
   },
   "scenario": {
     "title": "換個角度看看",
-    "subtitle": "拖動滑桿，即時比較不同選擇對每月儲蓄的影響。",
+    "subtitle": "拖動滑桿，即時比較不同選擇對每月投資的影響。",
     "startLabel": "開始投資時機",
     "returnLabel": "年化報酬率",
     "same": "與現在相同",
@@ -117,8 +117,8 @@
     "later": "晚 {n} 年開始",
     "originalSaving": "原方案每月需投資",
     "newSaving": "情境方案每月需投資",
-    "saveLess": "🎉 每月可少存 NT$ {amount}！",
-    "saveMore": "⚠️ 每月需多存 NT$ {amount}",
+    "saveLess": "🎉 每月可少投資 NT$ {amount}！",
+    "saveMore": "⚠️ 每月需多投資 NT$ {amount}",
     "noChange": "與原方案相同",
     "invalid": "時間不足，請調整滑桿（累積時間不能為負）"
   }

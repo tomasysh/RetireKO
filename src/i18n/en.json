@@ -109,7 +109,7 @@
   },
   "scenario": {
     "title": "What If?",
-    "subtitle": "Drag the sliders to instantly compare how different choices affect your monthly savings.",
+    "subtitle": "Drag the sliders to instantly compare how different choices affect your monthly investment.",
     "startLabel": "Investment start time",
     "returnLabel": "Annual return rate",
     "same": "Same as now",
@@ -117,8 +117,8 @@
     "later": "{n} years later",
     "originalSaving": "Original monthly investment",
     "newSaving": "Scenario monthly investment",
-    "saveLess": "🎉 Save NT$ {amount} less per month!",
-    "saveMore": "⚠️ Need NT$ {amount} more per month",
+    "saveLess": "🎉 Invest NT$ {amount} less per month!",
+    "saveMore": "⚠️ Need to invest NT$ {amount} more per month",
     "noChange": "Same as original plan",
     "invalid": "Not enough time — please adjust the slider (accumulation years cannot be zero or negative)"
   }

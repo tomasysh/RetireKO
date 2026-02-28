@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useI18n } from '../context/I18nContext';
 
 interface InfoBlockProps {
   content: string;
@@ -7,6 +8,7 @@ interface InfoBlockProps {
 
 export default function InfoBlock({ content, links }: InfoBlockProps) {
   const [open, setOpen] = useState(false);
+  const { t } = useI18n();
 
   return (
     <div className="mt-5">
@@ -14,7 +16,7 @@ export default function InfoBlock({ content, links }: InfoBlockProps) {
         onClick={() => setOpen(!open)}
         className="w-full text-left px-4 py-3 rounded-lg bg-slate-50 border border-slate-200 hover:bg-slate-100 transition-colors cursor-pointer flex items-center justify-between"
       >
-        <span className="text-slate-600 font-medium text-sm">💡 了解更多</span>
+        <span className="text-slate-600 font-medium text-sm">{t('app.learnMore')}</span>
         <span className="text-slate-400 text-xs">{open ? '▲' : '▼'}</span>
       </button>
       {open && (

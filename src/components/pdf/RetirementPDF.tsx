@@ -175,7 +175,7 @@ function RetirementPDFDocument(props: PDFDocumentProps) {
           )}
           <View style={styles.row}>
             <BT style={styles.label}>
-              {isZh ? `建議每月儲蓄 (${props.annualReturn}% 年化)` : `Monthly Savings (${props.annualReturn}% return)`}
+              {isZh ? `建議每月投資 (${props.annualReturn}% 年化)` : `Monthly Investment (${props.annualReturn}% return)`}
             </BT>
             <Text style={styles.value}>NT$ {props.monthlySaving}</Text>
           </View>
