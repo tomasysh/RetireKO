@@ -24,7 +24,7 @@ export default function WizardLayout() {
           {!isFirst && currentStep < totalSteps - 1 && (
             <button
               onClick={goPrev}
-              className="text-sm text-gray-500 hover:text-gray-700 transition-colors cursor-pointer"
+              className="text-sm text-gray-500 hover:text-gray-700 transition-colors cursor-pointer focus-visible:outline-none focus-visible:underline"
             >
               ← {t('app.prev')}
             </button>
@@ -32,7 +32,7 @@ export default function WizardLayout() {
         </div>
         <div className="w-full bg-gray-200 rounded-full h-2">
           <div
-            className="bg-emerald-500 h-2 rounded-full transition-all duration-300"
+            className="bg-emerald-500 h-2 rounded-full transition-[width] duration-300"
             style={{ width: `${((currentStep + 1) / totalSteps) * 100}%` }}
           />
         </div>

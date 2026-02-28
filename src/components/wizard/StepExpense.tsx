@@ -47,7 +47,7 @@ export default function StepExpense({ onNext }: StepProps) {
       <StepHeader emoji="🏡" step={3} title={t('stepExpense.title')} />
 
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">
+        <label htmlFor="monthly-expense" className="block text-sm font-medium text-gray-700 mb-1">
           {t('stepExpense.monthlyExpense')}
         </label>
         <p className="text-xs text-gray-500 mb-3 leading-relaxed">{t('stepExpense.hint')}</p>
@@ -56,8 +56,10 @@ export default function StepExpense({ onNext }: StepProps) {
             {t('stepExpense.currency')}
           </span>
           <input
+            id="monthly-expense"
             type="text"
             inputMode="numeric"
+            autoComplete="off"
             value={expenseInput}
             onChange={(e) => {
               const raw = e.target.value.replace(/[^\d]/g, '');
@@ -65,8 +67,8 @@ export default function StepExpense({ onNext }: StepProps) {
               setExpenseInput(raw === '' ? '' : num.toLocaleString('zh-TW'));
               setExpenseRaw(num);
             }}
-            placeholder={t('stepExpense.monthlyPlaceholder')}
-            className="w-full pl-14 pr-16 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none text-lg"
+            placeholder={t('stepExpense.monthlyPlaceholder') + '…'}
+            className="w-full pl-14 pr-16 py-3 rounded-lg border border-gray-300 focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:border-emerald-500 outline-none text-lg"
           />
           <span className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 text-sm">
             {t('stepExpense.perMonth')}
@@ -88,7 +90,7 @@ export default function StepExpense({ onNext }: StepProps) {
       <div className="mt-6 flex justify-end">
         <button
           onClick={validate}
-          className="px-6 py-2.5 rounded-lg text-white bg-emerald-500 hover:bg-emerald-600 transition-colors cursor-pointer font-medium"
+          className="px-6 py-2.5 rounded-lg text-white bg-emerald-500 hover:bg-emerald-600 transition-colors cursor-pointer font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2"
         >
           {t('app.next')}
         </button>

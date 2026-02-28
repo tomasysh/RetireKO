@@ -129,7 +129,7 @@ export default function ShareCard() {
       <button
         onClick={generate}
         disabled={loading}
-        className="flex-1 px-6 py-3 rounded-lg text-emerald-700 bg-emerald-100 hover:bg-emerald-200 transition-colors cursor-pointer font-medium flex items-center justify-center gap-2"
+        className="flex-1 px-6 py-3 rounded-lg text-emerald-700 bg-emerald-100 hover:bg-emerald-200 transition-colors cursor-pointer font-medium flex items-center justify-center gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
       >
         {loading ? (
           <>
@@ -148,23 +148,28 @@ export default function ShareCard() {
       {imgUrl && (
         <div
           className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4"
+          style={{ overscrollBehavior: 'contain' }}
+          role="dialog"
+          aria-modal="true"
+          aria-label={isZh ? '分享卡片預覽' : 'Share card preview'}
           onClick={() => setImgUrl(null)}
+          onKeyDown={(e) => { if (e.key === 'Escape') setImgUrl(null); }}
         >
           <div
             className="bg-white rounded-2xl shadow-2xl p-4 max-w-2xl w-full"
             onClick={(e) => e.stopPropagation()}
           >
-            <img src={imgUrl} alt="分享卡片" className="w-full rounded-lg mb-4" />
+            <img src={imgUrl} alt={isZh ? '分享卡片' : 'Share card'} className="w-full rounded-lg mb-4" />
             <div className="flex gap-3">
               <button
                 onClick={download}
-                className="flex-1 px-4 py-2.5 rounded-lg text-white bg-emerald-500 hover:bg-emerald-600 transition-colors font-medium"
+                className="flex-1 px-4 py-2.5 rounded-lg text-white bg-emerald-500 hover:bg-emerald-600 transition-colors font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
               >
                 ⬇️ {isZh ? '下載圖片' : 'Download Image'}
               </button>
               <button
                 onClick={() => setImgUrl(null)}
-                className="px-4 py-2.5 rounded-lg text-gray-600 bg-gray-100 hover:bg-gray-200 transition-colors font-medium"
+                className="px-4 py-2.5 rounded-lg text-gray-600 bg-gray-100 hover:bg-gray-200 transition-colors font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-400"
               >
                 {isZh ? '關閉' : 'Close'}
               </button>

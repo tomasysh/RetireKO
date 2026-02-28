@@ -46,14 +46,21 @@ export default function StepResult() {
             aria-selected={activeTab === tab.id}
             aria-controls={`panel-${tab.id}`}
             id={`tab-${tab.id}`}
+            tabIndex={activeTab === tab.id ? 0 : -1}
             onClick={() => setActiveTab(tab.id)}
             onKeyDown={(e) => {
+              let newIdx = -1;
               if (e.key === 'ArrowRight') {
                 const idx = tabs.findIndex((t) => t.id === tab.id);
-                setActiveTab(tabs[(idx + 1) % tabs.length].id);
+                newIdx = (idx + 1) % tabs.length;
               } else if (e.key === 'ArrowLeft') {
                 const idx = tabs.findIndex((t) => t.id === tab.id);
-                setActiveTab(tabs[(idx - 1 + tabs.length) % tabs.length].id);
+                newIdx = (idx - 1 + tabs.length) % tabs.length;
+              }
+              if (newIdx >= 0) {
+                setActiveTab(tabs[newIdx].id);
+                const el = document.getElementById(`tab-${tabs[newIdx].id}`);
+                el?.focus();
               }
             }}
             className={`flex-1 py-2 text-sm font-medium rounded-lg transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 cursor-pointer ${

@@ -62,13 +62,13 @@ export default function StepGender({ onNext }: StepProps) {
             <button
               key={gender}
               onClick={() => select(gender)}
-              className={`rounded-xl border-2 p-5 text-center transition-all cursor-pointer focus:outline-none ${
+              className={`rounded-xl border-2 p-5 text-center transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 ${
                 isSelected
                   ? 'border-emerald-500 bg-emerald-50 shadow-md'
                   : 'border-gray-200 bg-white hover:border-emerald-300 hover:bg-emerald-50/40'
               }`}
             >
-              <div className="text-5xl mb-2">{emoji}</div>
+              <div className="text-5xl mb-2" aria-hidden="true">{emoji}</div>
               <p className="font-bold text-gray-800 text-base mb-1">{t(labelKey)}</p>
               <p className="text-2xl font-extrabold text-emerald-600 mb-1">{lifeExp}</p>
               <p className="text-xs text-gray-500 mb-3">{t('stepGender.yearsUnit')}</p>

@@ -10,6 +10,11 @@ function App() {
     <div className="min-h-screen bg-gray-50 flex flex-col">
       <LanguageSwitcher />
 
+      {/* Skip link */}
+      <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:z-[100] focus:top-2 focus:left-2 focus:px-4 focus:py-2 focus:bg-emerald-700 focus:text-white focus:rounded-lg focus:text-sm">
+        Skip to content
+      </a>
+
       {/* Hero Header */}
       <header className="relative overflow-hidden bg-gradient-to-br from-emerald-900 via-emerald-800 to-emerald-700 text-white pt-14 pb-10 px-4 text-center">
         <div className="absolute -top-16 -right-16 w-64 h-64 rounded-full bg-white/5 pointer-events-none" aria-hidden="true" />

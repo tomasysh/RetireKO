@@ -77,17 +77,19 @@ export default function StepInflation({ onNext }: StepProps) {
 
       {/* Inflation rate slider */}
       <div className="mb-5">
-        <label className="block text-sm font-medium text-gray-700 mb-2">
+        <label htmlFor="inflation-rate" className="block text-sm font-medium text-gray-700 mb-2">
           {t('stepInflation.inflationRate')}:{' '}
           <span className="text-emerald-600 font-bold">{inflationRate}%</span>
         </label>
         <input
+          id="inflation-rate"
           type="range"
           min="0.5"
           max="5"
           step="0.1"
           value={inflationRate}
           onChange={(e) => setInflationRate(parseFloat(e.target.value))}
+          aria-label={t('stepInflation.inflationRate')}
           className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-emerald-500"
         />
         <div className="flex justify-between text-xs text-gray-400 mt-1">
@@ -98,7 +100,7 @@ export default function StepInflation({ onNext }: StepProps) {
 
       {/* Annual return slider */}
       <div className="mb-5">
-        <label className="block text-sm font-medium text-gray-700 mb-1">
+        <label htmlFor="annual-return" className="block text-sm font-medium text-gray-700 mb-1">
           {t('stepInflation.annualReturn')}:{' '}
           <span className="text-indigo-600 font-bold">{annualReturn}%</span>
         </label>
@@ -106,12 +108,14 @@ export default function StepInflation({ onNext }: StepProps) {
           {t('stepInflation.annualReturnHint')}
         </p>
         <input
+          id="annual-return"
           type="range"
           min="2"
           max="15"
           step="0.5"
           value={annualReturn}
           onChange={(e) => setAnnualReturn(parseFloat(e.target.value))}
+          aria-label={t('stepInflation.annualReturn')}
           className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-indigo-500"
         />
         <div className="flex justify-between text-xs text-gray-400 mt-1">
@@ -211,7 +215,7 @@ export default function StepInflation({ onNext }: StepProps) {
       <div className="mt-6 flex justify-end">
         <button
           onClick={handleNext}
-          className="px-6 py-2.5 rounded-lg text-white bg-emerald-500 hover:bg-emerald-600 transition-colors cursor-pointer font-medium"
+          className="px-6 py-2.5 rounded-lg text-white bg-emerald-500 hover:bg-emerald-600 transition-colors cursor-pointer font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2"
         >
           {t('app.next')}
         </button>

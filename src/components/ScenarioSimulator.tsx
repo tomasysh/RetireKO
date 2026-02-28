@@ -58,17 +58,19 @@ export default function ScenarioSimulator() {
 
       {/* Year offset slider */}
       <div className="mb-4">
-        <label className="block text-sm font-medium text-gray-700 mb-1">
+        <label htmlFor="scenario-year-offset" className="block text-sm font-medium text-gray-700 mb-1">
           {t('scenario.startLabel')}：
           <span className="font-bold text-violet-600">{yearLabel(yearOffset)}</span>
         </label>
         <input
+          id="scenario-year-offset"
           type="range"
           min={-10}
           max={10}
           step={1}
           value={yearOffset}
           onChange={(e) => setYearOffset(parseInt(e.target.value, 10))}
+          aria-label={t('scenario.startLabel')}
           className="w-full h-2 rounded-lg appearance-none cursor-pointer accent-violet-500 bg-violet-100"
         />
         <div className="flex justify-between text-xs text-gray-400 mt-1">
@@ -80,17 +82,19 @@ export default function ScenarioSimulator() {
 
       {/* Return rate slider */}
       <div className="mb-5">
-        <label className="block text-sm font-medium text-gray-700 mb-1">
+        <label htmlFor="scenario-return-rate" className="block text-sm font-medium text-gray-700 mb-1">
           {t('scenario.returnLabel')}：
           <span className="font-bold text-violet-600">{returnRate}%</span>
         </label>
         <input
+          id="scenario-return-rate"
           type="range"
           min={2}
           max={15}
           step={0.5}
           value={returnRate}
           onChange={(e) => setReturnRate(parseFloat(e.target.value))}
+          aria-label={t('scenario.returnLabel')}
           className="w-full h-2 rounded-lg appearance-none cursor-pointer accent-violet-500 bg-violet-100"
         />
         <div className="flex justify-between text-xs text-gray-400 mt-1">
