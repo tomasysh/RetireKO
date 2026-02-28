@@ -95,24 +95,54 @@ export default function StepResult() {
             <p className="text-sm font-bold text-orange-700 tabular-nums leading-tight">NT$&nbsp;{formatCurrency(state.futureAnnualExpense)}</p>
             <p className="text-xs text-orange-400">/yr</p>
           </div>
-          <div className="bg-purple-50 border border-purple-100 rounded-xl p-3 text-center">
-            <p className="text-xs text-purple-500 mb-1">{t('stepResult.monthlySaving')}</p>
-            <p className="text-sm font-bold text-purple-700 tabular-nums leading-tight">NT$&nbsp;{formatCurrency(state.monthlySaving)}</p>
-            <p className="text-xs text-purple-400">/mo</p>
+          <div className={`rounded-xl p-3 text-center ${
+            state.futureValueOfSavings != null && state.futureValueOfSavings >= state.retirementTarget
+              ? 'bg-emerald-50 border border-emerald-200'
+              : 'bg-purple-50 border border-purple-100'
+          }`}>
+            <p className={`text-xs mb-1 ${
+              state.futureValueOfSavings != null && state.futureValueOfSavings >= state.retirementTarget
+                ? 'text-emerald-600'
+                : 'text-purple-500'
+            }`}>{t('stepResult.monthlySaving')}</p>
+            {state.futureValueOfSavings != null && state.futureValueOfSavings >= state.retirementTarget ? (
+              <p className="text-sm font-bold text-emerald-700 leading-tight">🎉</p>
+            ) : (
+              <>
+                <p className="text-sm font-bold text-purple-700 tabular-nums leading-tight">NT$&nbsp;{formatCurrency(state.monthlySaving)}</p>
+                <p className="text-xs text-purple-400">/mo</p>
+              </>
+            )}
           </div>
         </div>
 
         {/* Existing savings offset callout */}
         {state.futureValueOfSavings != null && state.futureValueOfSavings > 0 && (
-          <div className="bg-violet-50 border border-violet-200 rounded-xl px-4 py-3 flex items-start gap-3 mb-4">
-            <span className="text-2xl flex-shrink-0" aria-hidden="true">💰</span>
-            <p className="text-sm text-violet-700 leading-relaxed">
-              {t('stepResult.savingsOffsetNote', {
-                savings: formatCurrency(state.currentSavings),
-                future: formatCurrency(state.futureValueOfSavings),
-              })}
-            </p>
-          </div>
+          state.futureValueOfSavings >= state.retirementTarget ? (
+            /* Savings fully cover target */
+            <div className="bg-emerald-50 border border-emerald-300 rounded-xl px-4 py-3 flex items-start gap-3 mb-4">
+              <span className="text-2xl flex-shrink-0" aria-hidden="true">🎉</span>
+              <div className="text-sm text-emerald-800">
+                <p className="font-semibold mb-1">{t('stepResult.savingsSufficient')}</p>
+                <p className="text-emerald-700">{t('stepResult.savingsSufficientNote', {
+                  savings: formatCurrency(state.currentSavings),
+                  future: formatCurrency(state.futureValueOfSavings),
+                  target: formatCurrency(state.retirementTarget),
+                })}</p>
+              </div>
+            </div>
+          ) : (
+            /* Partial offset */
+            <div className="bg-violet-50 border border-violet-200 rounded-xl px-4 py-3 flex items-start gap-3 mb-4">
+              <span className="text-2xl flex-shrink-0" aria-hidden="true">💰</span>
+              <p className="text-sm text-violet-700 leading-relaxed">
+                {t('stepResult.savingsOffsetNote', {
+                  savings: formatCurrency(state.currentSavings),
+                  future: formatCurrency(state.futureValueOfSavings),
+                })}
+              </p>
+            </div>
+          )
         )}
 
         {/* Life expectancy callout */}

@@ -169,18 +169,32 @@ export default function StepInflation({ onNext }: StepProps) {
 
               {/* Show existing savings offset if applicable */}
               {fvSavings != null && fvSavings > 0 && (
-                <div className="mt-3 pt-3 border-t border-emerald-200 space-y-1 text-sm">
-                  <p className="text-emerald-600">
-                    {t('stepInflation.savingsGrowthNote', { amount: formatCurrency(fvSavings) })}
-                  </p>
-                  <p className="font-semibold text-emerald-800">
-                    {t('stepInflation.adjustedTarget', { amount: formatCurrency(adjustedTarget ?? 0) })}
-                  </p>
-                </div>
+                fvSavings >= retirementTarget ? (
+                  /* Savings already exceed target → celebrate */
+                  <div className="mt-3 pt-3 border-t border-emerald-200 space-y-1 text-sm">
+                    <p className="text-emerald-600">
+                      {t('stepInflation.savingsGrowthNote', { amount: formatCurrency(fvSavings) })}
+                    </p>
+                    <p className="mt-1 text-base font-bold text-emerald-700">
+                      🎉 {t('stepInflation.savingsSufficient')}
+                    </p>
+                    <p className="text-xs text-emerald-600">{t('stepInflation.savingsSufficientHint')}</p>
+                  </div>
+                ) : (
+                  /* Partial offset */
+                  <div className="mt-3 pt-3 border-t border-emerald-200 space-y-1 text-sm">
+                    <p className="text-emerald-600">
+                      {t('stepInflation.savingsGrowthNote', { amount: formatCurrency(fvSavings) })}
+                    </p>
+                    <p className="font-semibold text-emerald-800">
+                      {t('stepInflation.adjustedTarget', { amount: formatCurrency(adjustedTarget ?? 0) })}
+                    </p>
+                  </div>
+                )
               )}
 
-              {/* Monthly saving preview — shows effect of return rate */}
-              {monthlySaving != null && (
+              {/* Monthly saving preview — only show when there's still a gap */}
+              {monthlySaving != null && (adjustedTarget ?? 0) > 0 && (
                 <p className="mt-2 text-sm text-emerald-700">
                   {t('stepInflation.monthlySavingPreview', { amount: formatCurrency(monthlySaving) })}
                 </p>
