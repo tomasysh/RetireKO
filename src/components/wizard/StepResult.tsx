@@ -21,7 +21,7 @@ export default function StepResult() {
     goToStep(0);
   };
 
-  if (!state.retirementTarget || !state.futureAnnualExpense || !state.yearsToRetire || !state.monthlySaving) {
+  if (state.retirementTarget == null || state.futureAnnualExpense == null || state.yearsToRetire == null || state.monthlySaving == null) {
     return <p className="text-center text-gray-500">No data available. Please complete all steps.</p>;
   }
 
