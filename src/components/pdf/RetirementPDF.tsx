@@ -6,7 +6,7 @@ import notoCJKUrl from '@fontsource/noto-sans-tc/files/noto-sans-tc-chinese-trad
 import notoCJKBoldUrl from '@fontsource/noto-sans-tc/files/noto-sans-tc-chinese-traditional-700-normal.woff?url';
 import { useI18n } from '../../context/I18nContext';
 import { useRetirement } from '../../context/RetirementContext';
-import { formatCurrency } from '../../utils/calculations';
+import { formatCurrency, type WithdrawalRow } from '../../utils/calculations';
 
 // Register Latin font (for ASCII, numbers, NT$)
 Font.register({
@@ -100,6 +100,21 @@ const styles = StyleSheet.create({
   ruleBox: { backgroundColor: '#eef2ff', padding: 12, borderRadius: 4, marginBottom: 16 },
   ruleTitle: { fontSize: 11, fontWeight: 700, color: '#4338ca', marginBottom: 4 },
   ruleText: { fontSize: 10, color: '#4f46e5', lineHeight: 1.5 },
+  // Page 2: Withdrawal schedule table
+  tableTitle: { fontSize: 16, fontWeight: 700, marginBottom: 4, color: '#92400e' },
+  tableSubtitle: { fontSize: 10, color: '#b45309', marginBottom: 12 },
+  tableHeader: { flexDirection: 'row' as const, backgroundColor: '#fef3c7', borderBottomWidth: 1, borderBottomColor: '#d97706', paddingVertical: 5 },
+  tableRow: { flexDirection: 'row' as const, borderBottomWidth: 0.5, borderBottomColor: '#e5e7eb', paddingVertical: 4 },
+  tableRowAlt: { flexDirection: 'row' as const, borderBottomWidth: 0.5, borderBottomColor: '#e5e7eb', paddingVertical: 4, backgroundColor: '#fafafa' },
+  tableRowDepleted: { flexDirection: 'row' as const, borderBottomWidth: 0.5, borderBottomColor: '#fca5a5', paddingVertical: 4, backgroundColor: '#fef2f2' },
+  thYear: { width: '12%', fontSize: 8, fontWeight: 700, color: '#92400e', textAlign: 'center' as const, fontFamily: 'NotoSansLatin' },
+  thAge: { width: '10%', fontSize: 8, fontWeight: 700, color: '#92400e', textAlign: 'center' as const, fontFamily: 'NotoSansLatin' },
+  thAmount: { width: '26%', fontSize: 8, fontWeight: 700, color: '#92400e', textAlign: 'right' as const, paddingRight: 6 },
+  tdYear: { width: '12%', fontSize: 8, color: '#374151', textAlign: 'center' as const, fontFamily: 'NotoSansLatin' },
+  tdAge: { width: '10%', fontSize: 8, color: '#374151', textAlign: 'center' as const, fontFamily: 'NotoSansLatin' },
+  tdAmount: { width: '26%', fontSize: 8, color: '#374151', textAlign: 'right' as const, paddingRight: 6, fontFamily: 'NotoSansLatin' },
+  tdWithdrawal: { width: '26%', fontSize: 8, color: '#c2410c', textAlign: 'right' as const, paddingRight: 6, fontFamily: 'NotoSansLatin' },
+  tdDepleted: { width: '26%', fontSize: 8, color: '#dc2626', textAlign: 'right' as const, paddingRight: 6 },
 });
 
 interface PDFDocumentProps {
@@ -111,11 +126,13 @@ interface PDFDocumentProps {
   futureAnnualExpense: string;
   monthlySaving: string;
   annualReturn: number;
+  withdrawalReturn: number;
   inflationRate: number;
   currentAge: number;
   retireAge: number;
   monthlyExpense: string;
   locale: string;
+  withdrawalSchedule: WithdrawalRow[] | null;
 }
 
 function RetirementPDFDocument(props: PDFDocumentProps) {
@@ -217,6 +234,65 @@ function RetirementPDFDocument(props: PDFDocumentProps) {
           </Link>
         </View>
       </Page>
+
+      {/* Page 2: Withdrawal Schedule */}
+      {props.withdrawalSchedule && props.withdrawalSchedule.length > 0 && (
+        <Page size="A4" style={styles.page} wrap>
+          <BT style={styles.tableTitle}>
+            {isZh ? '退休提領逐年推估表' : 'Year-by-Year Withdrawal Projection'}
+          </BT>
+          <BT style={styles.tableSubtitle}>
+            {isZh
+              ? `依 4% 法則 × 通膨 ${props.inflationRate}% × 提領期報酬 ${props.withdrawalReturn}%`
+              : `4% Rule × Inflation ${props.inflationRate}% × Withdrawal Return ${props.withdrawalReturn}%`}
+          </BT>
+
+          {/* Table header */}
+          <View style={styles.tableHeader} fixed>
+            <BT style={styles.thYear}>{isZh ? '年份' : 'Year'}</BT>
+            <BT style={styles.thAge}>{isZh ? '年齡' : 'Age'}</BT>
+            <BT style={styles.thAmount}>{isZh ? '年初資產餘額' : 'BOY Balance'}</BT>
+            <BT style={styles.thAmount}>{isZh ? '當年提領金額' : 'Withdrawal'}</BT>
+            <BT style={styles.thAmount}>{isZh ? '年末資產餘額' : 'EOY Balance'}</BT>
+          </View>
+
+          {/* Table rows */}
+          {props.withdrawalSchedule.map((row, idx) => (
+            <View
+              key={row.year}
+              style={row.eoyBalance <= 0 ? styles.tableRowDepleted : idx % 2 === 0 ? styles.tableRow : styles.tableRowAlt}
+              wrap={false}
+            >
+              <Text style={styles.tdYear}>{row.year}</Text>
+              <Text style={styles.tdAge}>{row.age}</Text>
+              <Text style={styles.tdAmount}>NT$ {formatCurrency(row.boyBalance)}</Text>
+              <Text style={styles.tdWithdrawal}>-NT$ {formatCurrency(row.withdrawal)}</Text>
+              {row.eoyBalance <= 0 ? (
+                <BT style={styles.tdDepleted}>{isZh ? '已耗盡' : 'Depleted'}</BT>
+              ) : (
+                <Text style={styles.tdAmount}>NT$ {formatCurrency(row.eoyBalance)}</Text>
+              )}
+            </View>
+          ))}
+
+          <BT style={styles.disclaimer}>
+            {isZh
+              ? '以上推估假設通膨率與報酬率維持不變，僅供參考。實際結果將因市場波動而異。'
+              : 'Projections assume constant inflation and return rates. Actual results will vary with market conditions.'}
+          </BT>
+
+          <View style={styles.footer} fixed>
+            <BT style={styles.footerText}>
+              {isZh ? '由 RetireKO 產生 · 一拳擊倒你的退休焦慮' : 'Generated by RetireKO · Knock Out Your Retirement Anxiety'}
+            </BT>
+            <Link src="https://zettelcousin.tw/" style={styles.footerLink}>
+              <Text style={{ fontFamily: 'NotoSansLatin', fontSize: 9, color: '#059669' }}>
+                {isZh ? '卡片表哥 zettelcousin.tw ↗' : 'zettelcousin.tw ↗'}
+              </Text>
+            </Link>
+          </View>
+        </Page>
+      )}
     </Document>
   );
 }
@@ -244,10 +320,12 @@ export default function RetirementPDFDownload() {
           monthlySaving={formatCurrency(state.monthlySaving!)}
           inflationRate={state.inflationRate}
           annualReturn={state.annualReturn}
+          withdrawalReturn={state.withdrawalReturn}
           currentAge={state.currentAge!}
           retireAge={state.retireAge!}
           monthlyExpense={formatCurrency(state.monthlyExpense!)}
           locale={locale}
+          withdrawalSchedule={state.withdrawalSchedule}
         />
       ).toBlob();
       const url = URL.createObjectURL(blob);

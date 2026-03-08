@@ -2,11 +2,13 @@ import { createContext, useContext, useReducer, type ReactNode } from 'react';
 import {
   LIFE_EXPECTANCY,
   type Gender,
+  type WithdrawalRow,
   calculateFutureExpense,
   calculateRetirementTarget,
   calculateMinimumTarget,
   calculateMonthlySaving,
   calculateFutureValueOfSavings,
+  generateWithdrawalSchedule,
 } from '../utils/calculations';
 export type { Gender } from '../utils/calculations';
 
@@ -19,6 +21,7 @@ export interface RetirementState {
   monthlyExpense: number | null;
   inflationRate: number;
   annualReturn: number;
+  withdrawalReturn: number;
   currentSavings: number;
   // Computed results
   yearsToRetire: number | null;
@@ -28,6 +31,7 @@ export interface RetirementState {
   minimumTarget: number | null;       // Finite annuity spend-down
   futureValueOfSavings: number | null; // Current savings grown to retirement
   monthlySaving: number | null;       // Monthly saving needed (after existing savings)
+  withdrawalSchedule: WithdrawalRow[] | null;
 }
 
 type Action =
@@ -36,6 +40,7 @@ type Action =
   | { type: 'SET_EXPENSE'; monthlyExpense: number }
   | { type: 'SET_INFLATION'; inflationRate: number }
   | { type: 'SET_RETURN'; annualReturn: number }
+  | { type: 'SET_WITHDRAWAL_RETURN'; withdrawalReturn: number }
   | { type: 'SET_SAVINGS'; currentSavings: number }
   | { type: 'CALCULATE' }
   | { type: 'RESET' };
@@ -48,7 +53,8 @@ const initialState: RetirementState = {
   retirementYears: null,
   monthlyExpense: null,
   inflationRate: 2,
-  annualReturn: 6,
+  annualReturn: 7,
+  withdrawalReturn: 7,
   currentSavings: 0,
   yearsToRetire: null,
   annualExpense: null,
@@ -57,6 +63,7 @@ const initialState: RetirementState = {
   minimumTarget: null,
   futureValueOfSavings: null,
   monthlySaving: null,
+  withdrawalSchedule: null,
 };
 
 function reducer(state: RetirementState, action: Action): RetirementState {
@@ -84,6 +91,8 @@ function reducer(state: RetirementState, action: Action): RetirementState {
       return { ...state, inflationRate: action.inflationRate };
     case 'SET_RETURN':
       return { ...state, annualReturn: action.annualReturn };
+    case 'SET_WITHDRAWAL_RETURN':
+      return { ...state, withdrawalReturn: action.withdrawalReturn };
     case 'SET_SAVINGS':
       return { ...state, currentSavings: action.currentSavings };
     case 'CALCULATE': {
@@ -98,7 +107,18 @@ function reducer(state: RetirementState, action: Action): RetirementState {
         : null;
       const adjustedTarget = Math.max(0, retirementTarget - (futureValueOfSavings ?? 0));
       const monthlySaving = calculateMonthlySaving(adjustedTarget, state.yearsToRetire, state.annualReturn / 100);
-      return { ...state, futureAnnualExpense, retirementTarget, minimumTarget, futureValueOfSavings, monthlySaving };
+      const withdrawalSchedule = (state.retirementYears != null && state.retireAge != null)
+        ? generateWithdrawalSchedule(
+            retirementTarget,
+            futureAnnualExpense,
+            state.inflationRate,
+            state.withdrawalReturn,
+            state.retirementYears,
+            state.retireAge,
+            new Date().getFullYear() + state.yearsToRetire
+          )
+        : null;
+      return { ...state, futureAnnualExpense, retirementTarget, minimumTarget, futureValueOfSavings, monthlySaving, withdrawalSchedule };
     }
     case 'RESET':
       return initialState;

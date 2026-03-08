@@ -7,6 +7,7 @@ import RetirementPDFDownload from '../pdf/RetirementPDF';
 import StepHeader from '../ui/StepHeader';
 import ScenarioSimulator from '../ScenarioSimulator';
 import ShareCard from '../ShareCard';
+import WithdrawalScheduleTable from '../WithdrawalScheduleTable';
 
 type Tab = 'summary' | 'analysis' | 'scenario';
 
@@ -174,6 +175,11 @@ export default function StepResult() {
         aria-labelledby="tab-analysis"
         hidden={activeTab !== 'analysis'}
       >
+        {/* Withdrawal schedule table */}
+        {state.withdrawalSchedule && state.withdrawalSchedule.length > 0 && (
+          <WithdrawalScheduleTable schedule={state.withdrawalSchedule} />
+        )}
+
         {/* Minimum target comparison */}
         {state.minimumTarget != null && state.retirementYears && diff != null && (
           <div className="bg-amber-50 border border-amber-200 rounded-xl px-4 py-4 mb-4">

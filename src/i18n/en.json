@@ -62,8 +62,10 @@
     "title": "Inflation × 4% Rule = Your Target",
     "inflationRate": "Estimated Annual Inflation Rate",
     "inflationDescription": "Inflation shrinks purchasing power over time. NT$ 100 today may only buy NT$ 55 worth of goods in 30 years (at 2% annual inflation). We use this to convert your current expenses into what you'll actually need at retirement.",
-    "annualReturn": "Estimated Annual Return (Accumulation Phase)",
+    "annualReturn": "Accumulation Phase Annual Return",
     "annualReturnHint": "This rate affects how much you need to save each month during the accumulation phase. Reference: VT (Global Stock ETF) ~10% historical annual return; Taiwan 0050 ~12% (both nominal, before inflation adjustment).",
+    "withdrawalReturn": "Withdrawal Phase Annual Return",
+    "withdrawalReturnHint": "Expected annual return on your portfolio after retirement. The 4% Rule (Trinity Study) assumes a 50–75% stock portfolio with ~7% historical annual return.",
     "retirementYearsNote": "📅 Based on your life expectancy, your fund must last ~{years} years in retirement",
     "futureExpense": "Estimated annual expense at retirement: NT$ {amount}",
     "retirementTarget": "Your Retirement Target",
@@ -77,7 +79,7 @@
     "savingsSufficient": "Your existing assets already exceed the retirement target — no additional investments needed!",
     "savingsSufficientHint": "This is the power of compound interest: high returns over a long period can make your savings far exceed your retirement needs.",
     "monthlySavingPreview": "📌 Estimated monthly investment needed: NT$ {amount}",
-    "infoContent": "Inflation is a \"silent thief\" that erodes purchasing power each year. The \"4% Rule\" comes from the 1998 Trinity Study, which backtested real market data from 1926–1995: assuming a retirement portfolio of 50–75% stocks kept invested (historical ~7% annual return), withdrawing no more than 4% per year succeeded in 95%+ of historical scenarios for 30+ years.\n\n⚠️ Two-rate design: the \"accumulation return\" is the X% you entered — used to calculate monthly savings. The \"withdrawal-phase return\" is the 4% Rule's built-in ~7%, which determines the 25× multiplier. These are separate, but both are reasonable standard assumptions.",
+    "infoContent": "Inflation is a \"silent thief\" that erodes purchasing power each year. The \"4% Rule\" comes from the 1998 Trinity Study, which backtested real market data from 1926–1995: assuming a retirement portfolio of 50–75% stocks kept invested (historical ~7% annual return), withdrawing no more than 4% per year succeeded in 95%+ of historical scenarios for 30+ years.\n\n⚠️ Two-rate design: the \"accumulation return\" is used to calculate monthly savings needed. The \"withdrawal return\" simulates post-retirement portfolio growth and determines the 25× multiplier. Both default to 7%, but you can adjust them independently to model different risk profiles.",
     "infoLinkTrinity": "Trinity Study (Wikipedia)",
     "infoLink4pct": "The 4% Rule explained (Investopedia)"
   },
@@ -106,6 +108,21 @@
     "tabAnalysis": "Analysis",
     "tabScenario": "What If?",
     "disclaimer": "The above calculations are for reference only and do not constitute investment advice. Please consult a professional financial advisor for actual retirement planning."
+  },
+  "withdrawalSchedule": {
+    "title": "Year-by-Year Withdrawal Projection",
+    "subtitle": "Based on the 4% Rule: withdrawals adjusted for inflation, portfolio grows at withdrawal-phase return.",
+    "colYear": "Year",
+    "colAge": "Age",
+    "colBoyBalance": "BOY Balance",
+    "colWithdrawal": "Withdrawal",
+    "colEoyBalance": "EOY Balance",
+    "showAll": "Show All",
+    "collapse": "Collapse",
+    "pdfTitle": "Year-by-Year Withdrawal Projection",
+    "pdfSubtitle": "4% Rule × Inflation {inflation}% × Withdrawal Return {return}%",
+    "fundDepleted": "Fund depleted",
+    "yearUnit": "yrs"
   },
   "scenario": {
     "title": "What If?",

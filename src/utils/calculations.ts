@@ -69,6 +69,55 @@ export function calculateFutureValueOfSavings(
   return currentSavings * Math.pow(1 + annualReturn / 100, years);
 }
 
+export interface WithdrawalRow {
+  year: number;
+  age: number;
+  boyBalance: number;
+  withdrawal: number;
+  eoyBalance: number;
+}
+
+/**
+ * Generate a year-by-year withdrawal schedule for retirement.
+ * Year 1 withdrawal = futureAnnualExpense (4% of target).
+ * Each subsequent year: withdrawal adjusted by inflation, portfolio grows at withdrawalReturn.
+ */
+export function generateWithdrawalSchedule(
+  retirementTarget: number,
+  futureAnnualExpense: number,
+  inflationRate: number,       // percent e.g. 2
+  withdrawalReturn: number,    // percent e.g. 7
+  retirementYears: number,
+  retireAge: number,
+  startYear: number
+): WithdrawalRow[] {
+  const rows: WithdrawalRow[] = [];
+  let balance = retirementTarget;
+  let withdrawal = futureAnnualExpense;
+
+  for (let i = 0; i < retirementYears; i++) {
+    const boyBalance = balance;
+    if (i > 0) {
+      withdrawal = withdrawal * (1 + inflationRate / 100);
+    }
+    const actualWithdrawal = Math.min(withdrawal, Math.max(boyBalance, 0));
+    const eoyBalance = Math.max(0, (boyBalance - actualWithdrawal) * (1 + withdrawalReturn / 100));
+
+    rows.push({
+      year: startYear + i,
+      age: retireAge + i,
+      boyBalance,
+      withdrawal: actualWithdrawal,
+      eoyBalance,
+    });
+
+    balance = eoyBalance;
+    if (balance <= 0) break;
+  }
+
+  return rows;
+}
+
 export function formatCurrency(amount: number): string {
   return Math.round(amount).toLocaleString('zh-TW');
 }

@@ -21,6 +21,7 @@ export default function StepInflation({ onNext }: StepProps) {
 
   const [inflationRate, setInflationRate] = useState(state.inflationRate);
   const [annualReturn, setAnnualReturn] = useState(state.annualReturn);
+  const [withdrawalReturn, setWithdrawalReturn] = useState(state.withdrawalReturn);
   const [currentSavings, setCurrentSavings] = useState(state.currentSavings);
   const [savingsInput, setSavingsInput] = useState(
     state.currentSavings > 0 ? state.currentSavings.toLocaleString('zh-TW') : ''
@@ -33,6 +34,10 @@ export default function StepInflation({ onNext }: StepProps) {
   useEffect(() => {
     dispatch({ type: 'SET_RETURN', annualReturn });
   }, [annualReturn, dispatch]);
+
+  useEffect(() => {
+    dispatch({ type: 'SET_WITHDRAWAL_RETURN', withdrawalReturn });
+  }, [withdrawalReturn, dispatch]);
 
   useEffect(() => {
     dispatch({ type: 'SET_SAVINGS', currentSavings });
@@ -64,6 +69,7 @@ export default function StepInflation({ onNext }: StepProps) {
   const handleNext = () => {
     dispatch({ type: 'SET_INFLATION', inflationRate });
     dispatch({ type: 'SET_RETURN', annualReturn });
+    dispatch({ type: 'SET_WITHDRAWAL_RETURN', withdrawalReturn });
     dispatch({ type: 'SET_SAVINGS', currentSavings });
     dispatch({ type: 'CALCULATE' });
     onNext();
@@ -98,7 +104,7 @@ export default function StepInflation({ onNext }: StepProps) {
         </div>
       </div>
 
-      {/* Annual return slider */}
+      {/* Annual return slider (accumulation) */}
       <div className="mb-5">
         <label htmlFor="annual-return" className="block text-sm font-medium text-gray-700 mb-1">
           {t('stepInflation.annualReturn')}:{' '}
@@ -122,6 +128,35 @@ export default function StepInflation({ onNext }: StepProps) {
           <span>2%</span>
           <span className="text-gray-400">
             VT ~10% / 0050 ~12%
+          </span>
+          <span>15%</span>
+        </div>
+      </div>
+
+      {/* Withdrawal return slider */}
+      <div className="mb-5">
+        <label htmlFor="withdrawal-return" className="block text-sm font-medium text-gray-700 mb-1">
+          {t('stepInflation.withdrawalReturn')}:{' '}
+          <span className="text-amber-600 font-bold">{withdrawalReturn}%</span>
+        </label>
+        <p className="text-xs text-gray-500 mb-2 leading-relaxed">
+          {t('stepInflation.withdrawalReturnHint')}
+        </p>
+        <input
+          id="withdrawal-return"
+          type="range"
+          min="2"
+          max="15"
+          step="0.5"
+          value={withdrawalReturn}
+          onChange={(e) => setWithdrawalReturn(parseFloat(e.target.value))}
+          aria-label={t('stepInflation.withdrawalReturn')}
+          className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-amber-500"
+        />
+        <div className="flex justify-between text-xs text-gray-400 mt-1">
+          <span>2%</span>
+          <span className="text-gray-400">
+            4% Rule ~7%
           </span>
           <span>15%</span>
         </div>
