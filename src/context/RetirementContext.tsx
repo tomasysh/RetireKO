@@ -19,6 +19,7 @@ export interface RetirementState {
   lifeExpectancy: number | null;
   retirementYears: number | null;
   monthlyExpense: number | null;
+  monthlyPension: number | null;
   inflationRate: number;
   annualReturn: number;
   withdrawalReturn: number;
@@ -38,6 +39,7 @@ type Action =
   | { type: 'SET_AGE'; currentAge: number; retireAge: number }
   | { type: 'SET_GENDER'; gender: Gender }
   | { type: 'SET_EXPENSE'; monthlyExpense: number }
+  | { type: 'SET_PENSION'; monthlyPension: number }
   | { type: 'SET_INFLATION'; inflationRate: number }
   | { type: 'SET_RETURN'; annualReturn: number }
   | { type: 'SET_WITHDRAWAL_RETURN'; withdrawalReturn: number }
@@ -52,6 +54,7 @@ const initialState: RetirementState = {
   lifeExpectancy: null,
   retirementYears: null,
   monthlyExpense: null,
+  monthlyPension: null,
   inflationRate: 2,
   annualReturn: 7,
   withdrawalReturn: 7,
@@ -93,11 +96,16 @@ function reducer(state: RetirementState, action: Action): RetirementState {
       return { ...state, annualReturn: action.annualReturn };
     case 'SET_WITHDRAWAL_RETURN':
       return { ...state, withdrawalReturn: action.withdrawalReturn };
+    case 'SET_PENSION':
+      return { ...state, monthlyPension: action.monthlyPension };
     case 'SET_SAVINGS':
       return { ...state, currentSavings: action.currentSavings };
     case 'CALCULATE': {
       if (state.annualExpense == null || state.yearsToRetire == null) return state;
-      const futureAnnualExpense = calculateFutureExpense(state.annualExpense, state.inflationRate, state.yearsToRetire);
+      // Deduct pension income from annual expense before inflation
+      const pensionAnnual = (state.monthlyPension ?? 0) * 12;
+      const adjustedAnnualExpense = Math.max(0, state.annualExpense - pensionAnnual);
+      const futureAnnualExpense = calculateFutureExpense(adjustedAnnualExpense, state.inflationRate, state.yearsToRetire);
       const retirementTarget = calculateRetirementTarget(futureAnnualExpense);
       const minimumTarget = state.retirementYears != null
         ? calculateMinimumTarget(futureAnnualExpense, state.retirementYears, state.annualReturn, state.inflationRate)

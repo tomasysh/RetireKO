@@ -26,6 +26,10 @@ export default function StepInflation({ onNext }: StepProps) {
   const [savingsInput, setSavingsInput] = useState(
     state.currentSavings > 0 ? state.currentSavings.toLocaleString('zh-TW') : ''
   );
+  const [monthlyPension, setMonthlyPension] = useState(state.monthlyPension ?? 0);
+  const [pensionInput, setPensionInput] = useState(
+    (state.monthlyPension ?? 0) > 0 ? (state.monthlyPension!).toLocaleString('zh-TW') : ''
+  );
 
   useEffect(() => {
     dispatch({ type: 'SET_INFLATION', inflationRate });
@@ -43,9 +47,18 @@ export default function StepInflation({ onNext }: StepProps) {
     dispatch({ type: 'SET_SAVINGS', currentSavings });
   }, [currentSavings, dispatch]);
 
+  useEffect(() => {
+    dispatch({ type: 'SET_PENSION', monthlyPension });
+  }, [monthlyPension, dispatch]);
+
+  const pensionAnnual = (monthlyPension ?? 0) * 12;
+  const adjustedAnnualExpense = state.annualExpense
+    ? Math.max(0, state.annualExpense - pensionAnnual)
+    : null;
+
   const futureAnnualExpense =
-    state.annualExpense && state.yearsToRetire
-      ? calculateFutureExpense(state.annualExpense, inflationRate, state.yearsToRetire)
+    adjustedAnnualExpense && state.yearsToRetire
+      ? calculateFutureExpense(adjustedAnnualExpense, inflationRate, state.yearsToRetire)
       : null;
 
   const retirementTarget = futureAnnualExpense
@@ -70,10 +83,13 @@ export default function StepInflation({ onNext }: StepProps) {
     dispatch({ type: 'SET_INFLATION', inflationRate });
     dispatch({ type: 'SET_RETURN', annualReturn });
     dispatch({ type: 'SET_WITHDRAWAL_RETURN', withdrawalReturn });
+    dispatch({ type: 'SET_PENSION', monthlyPension });
     dispatch({ type: 'SET_SAVINGS', currentSavings });
     dispatch({ type: 'CALCULATE' });
     onNext();
   };
+
+  const pensionExceedsExpense = monthlyPension > 0 && state.monthlyExpense != null && monthlyPension >= state.monthlyExpense;
 
   return (
     <div>
@@ -162,6 +178,46 @@ export default function StepInflation({ onNext }: StepProps) {
         </div>
       </div>
 
+      {/* Monthly pension income input */}
+      <div className="mb-5">
+        <label className="block text-sm font-medium text-gray-700 mb-1">
+          {t('stepInflation.monthlyPension')}
+          <span className="ml-1 text-xs text-gray-400 font-normal">{t('stepInflation.monthlyPensionOptional')}</span>
+        </label>
+        <p className="text-xs text-gray-500 mb-2 leading-relaxed">{t('stepInflation.monthlyPensionHint')}</p>
+        <p className="text-xs text-gray-400 mb-2 leading-relaxed">
+          {t('stepInflation.pensionGuide')}{' '}
+          <a
+            href="https://edesk.bli.gov.tw/me/#/na/login"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-indigo-500 underline hover:text-indigo-700"
+          >
+            {t('stepInflation.pensionGuideLink')} ↗
+          </a>
+        </p>
+        <div className="relative">
+          <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm select-none">NT$</span>
+          <input
+            type="text"
+            inputMode="numeric"
+            value={pensionInput}
+            onChange={(e) => {
+              const raw = e.target.value.replace(/[^\d]/g, '');
+              const num = raw === '' ? 0 : parseInt(raw, 10);
+              setPensionInput(raw === '' ? '' : num.toLocaleString('zh-TW'));
+              setMonthlyPension(num);
+            }}
+            placeholder={t('stepInflation.monthlyPensionPlaceholder')}
+            className="w-full pl-12 pr-16 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
+          />
+          <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm select-none">/ {t('stepExpense.perMonth').replace('/ ', '')}</span>
+        </div>
+        {pensionExceedsExpense && (
+          <p className="text-xs text-rose-500 mt-1">{t('stepInflation.pensionValidation')}</p>
+        )}
+      </div>
+
       {/* Existing savings input */}
       <div className="mb-5">
         <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -194,6 +250,16 @@ export default function StepInflation({ onNext }: StepProps) {
           <div className="bg-orange-50 border border-orange-200 rounded-lg px-4 py-3 text-orange-700 text-sm">
             {t('stepInflation.futureExpense', { amount: formatCurrency(futureAnnualExpense) })}
           </div>
+
+          {/* Pension deduction note */}
+          {monthlyPension > 0 && !pensionExceedsExpense && (
+            <div className="bg-teal-50 border border-teal-200 rounded-lg px-4 py-3 text-teal-700 text-sm">
+              {t('stepInflation.pensionDeductionNote', {
+                amount: formatCurrency(monthlyPension),
+                annual: formatCurrency(pensionAnnual),
+              })}
+            </div>
+          )}
 
           {state.retirementYears && (
             <div className="bg-blue-50 border border-blue-200 rounded-lg px-4 py-3 text-blue-700 text-sm">

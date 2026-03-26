@@ -207,6 +207,9 @@ export default function StepResult() {
             {state.retirementYears && (
               <li>{t('stepResult.assumptionRetirementYears', { years: state.retirementYears })}</li>
             )}
+            {state.monthlyPension != null && state.monthlyPension > 0 && (
+              <li>{t('stepResult.pensionAssumption', { amount: formatCurrency(state.monthlyPension) })}</li>
+            )}
             <li className="pt-1 border-t border-gray-200 text-xs text-gray-500">{t('stepResult.assumptionRule')}</li>
           </ul>
         </div>

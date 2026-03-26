@@ -26,9 +26,12 @@ export default function ScenarioSimulator() {
   const scenario = useMemo(() => {
     const years = (state.yearsToRetire ?? 0) - yearOffset; // negative offset = earlier = more years
     if (years <= 0 || !state.annualExpense || !state.retirementYears) return null;
+    // Deduct pension from annual expense (same as main calculation)
+    const pensionAnnual = (state.monthlyPension ?? 0) * 12;
+    const adjustedAnnualExpense = Math.max(0, state.annualExpense - pensionAnnual);
     // Future expense anchored to original retirement age regardless of yearOffset
     const futureAnnualExpense = calculateFutureExpense(
-      state.annualExpense,
+      adjustedAnnualExpense,
       state.inflationRate,
       state.yearsToRetire ?? 0
     );
